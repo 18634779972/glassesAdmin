@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xjt.dao.other.DictcalltextSqlDao">
+
+    <resultMap id="BaseResultMap" type="com.xjt.entity.Dictcalltext" >
+        <id column="CallText" property="calltext" jdbcType="VARCHAR" />
+    </resultMap>
+    <!--批量删除-->
+    <delete id="deleteByPrimaryKey" parameterType="java.util.List" >
+        delete from dictcalltext
+        where CallText in
+        <foreach collection="calltexts" item="text" open="(" index="index" close=")" separator=",">
+            #{calltext,jdbcType=VARCHAR}
+        </foreach>
+
+    </delete>
+    <!--批量添加-->
+    <insert id="insertTextBatch" parameterType="java.util.List">
+        <foreach collection="calltexts" item="text" index="index" separator=",">
+            insert into dictcalltext (CallText)
+            values (#{text})
+        </foreach>
+    </insert>
+    <!--查看项目-->
+    <select id="queryAllTexts" parameterType="com.xjt.entity.Dictcalltext" resultMap="BaseResultMap">
+        select CallText
+        from dictcalltext
+        <where>
+            <if test="calltext != null">
+                and CallText like '%'+#{calltext}+'%'
+            </if>
+        </where>
+    </select>
+</mapper>

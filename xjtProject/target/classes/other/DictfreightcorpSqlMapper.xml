@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xjt.dao.other.DictfreightcorpSqlDao" >
+
+    <resultMap id="BaseResultMap" type="com.xjt.entity.Dictfreightcorp" >
+        <id column="FreightCorp" property="freightcorp" jdbcType="VARCHAR" />
+        <result column="LinkMan" property="linkman" jdbcType="VARCHAR" />
+        <result column="LikeTel" property="liketel" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        FreightCorp, LinkMan, LikeTel
+    </sql>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        select
+        <include refid="Base_Column_List" />
+        from dictfreightcorp
+        where FreightCorp = #{freightcorp,jdbcType=VARCHAR}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+        delete from dictfreightcorp
+        where FreightCorp = #{freightcorp,jdbcType=VARCHAR}
+    </delete>
+
+    <delete id="deleteBatch" parameterType="java.util.List">
+        delete from dictfreightcorp
+        where FreightCorp in
+        <foreach collection="records" item="entity" close=")" open="(" separator=",">
+            #{entity.freightcorp,jdbcType=VARCHAR}
+        </foreach>
+
+    </delete>
+
+    <insert id="insert" parameterType="com.xjt.entity.Dictfreightcorp" >
+        insert into dictfreightcorp (FreightCorp, LinkMan, LikeTel
+            )
+        values (#{freightcorp,jdbcType=VARCHAR}, #{linkman,jdbcType=VARCHAR}, #{liketel,jdbcType=VARCHAR}
+            )
+    </insert>
+    <insert id="insertBatch" parameterType="java.util.List">
+
+        <foreach collection="records" item="entity" separator=";" >
+            insert into dictfreightcorp (FreightCorp, LinkMan, LikeTel
+            )
+            values
+            (#{entity.freightcorp,jdbcType=VARCHAR}, #{entity.linkman,jdbcType=VARCHAR}, #{entity.liketel,jdbcType=VARCHAR})
+        </foreach>
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.xjt.entity.Dictfreightcorp" >
+        insert into dictfreightcorp
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="freightcorp != null" >
+                FreightCorp,
+            </if>
+            <if test="linkman != null" >
+                LinkMan,
+            </if>
+            <if test="liketel != null" >
+                LikeTel,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="freightcorp != null" >
+                #{freightcorp,jdbcType=VARCHAR},
+            </if>
+            <if test="linkman != null" >
+                #{linkman,jdbcType=VARCHAR},
+            </if>
+            <if test="liketel != null" >
+                #{liketel,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.xjt.entity.Dictfreightcorp" >
+        update dictfreightcorp
+        <set >
+            <if test="linkman != null" >
+                LinkMan = #{linkman,jdbcType=VARCHAR},
+            </if>
+            <if test="liketel != null" >
+                LikeTel = #{liketel,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where FreightCorp = #{freightcorp,jdbcType=VARCHAR}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.xjt.entity.Dictfreightcorp" >
+        update dictfreightcorp
+        set LinkMan = #{linkman,jdbcType=VARCHAR},
+            LikeTel = #{liketel,jdbcType=VARCHAR}
+        where FreightCorp = #{freightcorp,jdbcType=VARCHAR}
+    </update>
+
+    <select id="queryAllCorps" parameterType="com.xjt.entity.Dictfreightcorp" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from dictfreightcorp
+        <where>
+            <if test="freightcorp != null">
+                and FreightCorp like '%'+#{freightcorp,jdbcType=VARCHAR}+'%'
+            </if>
+            <if test="linkman != null">
+                and LinkMan = #{linkman,jdbcType=VARCHAR}
+            </if>
+            <if test="liketel != null">
+                and LikeTel = #{liketel,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </select>
+</mapper>

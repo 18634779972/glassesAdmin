@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xjt.dao.master.DictbrandDao" >
+
+    <resultMap id="BaseResultMap" type="com.xjt.entity.DictBrand" >
+        <id column="Brand" property="brand" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.util.List" >
+        delete from dictbrand
+        where Brand in
+          <foreach collection="brands" item="brand" index="index" separator="," open="(" close=")">
+              #{brand,jdbcType=VARCHAR}
+          </foreach>
+
+    </delete>
+
+    <insert id="insert" parameterType="com.xjt.entity.DictBrand" >
+        insert into dictbrand (Brand)
+        values (#{brand,jdbcType=VARCHAR})
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.xjt.entity.DictBrand" >
+        insert into dictbrand
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="brand != null" >
+                Brand,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="brand != null" >
+                #{brand,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <!--批量增加-->
+    <insert id="insertBatch" parameterType="java.util.List">
+        insert into dictbrand (Brand)
+        values
+        <foreach collection="dictBrands" item="brand" index="index" separator=",">
+            (#{brand})
+        </foreach>
+    </insert>
+    <!--查看所有品牌-->
+    <select id="queryAllBrand" resultMap="BaseResultMap" parameterType="com.xjt.entity.DictBrand">
+      SELECT * FROM dictbrand a
+      <where>
+          <if test="Brand != null">
+            and   a.Brand LIKE concat('%',#{Brand},'%')
+          </if>
+      </where>
+    </select>
+
+
+</mapper>

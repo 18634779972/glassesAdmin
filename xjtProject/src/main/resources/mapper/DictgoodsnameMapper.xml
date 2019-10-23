@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xjt.dao.master.DictgoodsnameDao" >
+
+    <resultMap id="BaseResultMap" type="com.xjt.entity.Dictgoodsname" >
+        <id column="GoodsName" property="goodsname" jdbcType="VARCHAR" />
+    </resultMap>
+<!--批量删除-->
+    <delete id="deleteByPrimaryKey" parameterType="java.util.List" >
+        delete from dictgoodsname
+        where GoodsName in
+        <foreach collection="gNames" item="name" separator="," index="index" open="(" close=")">
+            #{name,jdbcType=VARCHAR}
+        </foreach>
+
+    </delete>
+
+    <insert id="insert" parameterType="com.xjt.entity.Dictgoodsname" >
+        insert into dictgoodsname (GoodsName)
+        values (#{goodsname,jdbcType=VARCHAR})
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.xjt.entity.Dictgoodsname" >
+        insert into dictgoodsname
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="goodsname != null" >
+                GoodsName,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="goodsname != null" >
+                #{goodsname,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <!--批量添加-->
+    <insert id="insertNamesBatch" parameterType="java.util.List">
+         insert into dictgoodsname (GoodsName)
+        values
+        <foreach collection="gNames" item="name" index="index" separator=",">
+            (#{name})
+        </foreach>
+    </insert>
+    <!--查看-->
+    <select id="queryAllNames" parameterType="com.xjt.entity.Dictgoodsname" resultMap="BaseResultMap">
+        select GoodsName from dictgoodsname
+        <where>
+            <if test="goodsname != null">
+                and GoodsName like '%'+#{goodsname}+'%'
+            </if>
+        </where>
+    </select>
+</mapper>

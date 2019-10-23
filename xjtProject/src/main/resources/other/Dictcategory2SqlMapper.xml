@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xjt.dao.other.Dictcategory2SqlDao" >
+
+    <resultMap id="BaseResultMap" type="com.xjt.entity.Dictcategory2" >
+        <id column="Category2" property="category2" jdbcType="VARCHAR" />
+        <result column="ParentCategory" property="parentcategory" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        Category2, ParentCategory
+    </sql>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        select
+        <include refid="Base_Column_List" />
+        from dictcategory2
+        where Category2 = #{category2,jdbcType=VARCHAR}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+        delete from dictcategory2
+        where Category2 = #{category2,jdbcType=VARCHAR}
+    </delete>
+    <!--批量删除-->
+    <delete id="deleteBatch" parameterType="java.util.List">
+        delete from dictcategory2
+        where Category2 in
+        <foreach collection="records" item="entity" separator="," open="(" close=")">
+            #{entity.Category2}
+        </foreach>
+    </delete>
+
+    <insert id="insert" parameterType="com.xjt.entity.Dictcategory2" >
+        insert into dictcategory2 (Category2, ParentCategory)
+        values (#{category2,jdbcType=VARCHAR}, #{parentcategory,jdbcType=VARCHAR})
+    </insert>
+    <!--批量增加-->
+    <insert id="insertBatch" parameterType="java.util.List">
+
+        <foreach collection="records" item="entity" separator=";" >
+            insert into dictcategory2 (Category2, ParentCategory)
+            values
+            (#{entity.category2,jdbcType=VARCHAR}, #{entity.parentcategory,jdbcType=VARCHAR})
+        </foreach>
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.xjt.entity.Dictcategory2" >
+        insert into dictcategory2
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="category2 != null" >
+                Category2,
+            </if>
+            <if test="parentcategory != null" >
+                ParentCategory,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="category2 != null" >
+                #{category2,jdbcType=VARCHAR},
+            </if>
+            <if test="parentcategory != null" >
+                #{parentcategory,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.xjt.entity.Dictcategory2" >
+        update dictcategory2
+        <set >
+            <if test="parentcategory != null" >
+                ParentCategory = #{parentcategory,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where Category2 = #{category2,jdbcType=VARCHAR}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.xjt.entity.Dictcategory2" >
+        update dictcategory2
+        set ParentCategory = #{parentcategory,jdbcType=VARCHAR}
+        where Category2 = #{category2,jdbcType=VARCHAR}
+    </update>
+    <!--查看二级分类,-->
+    <select id="queryCategory2" parameterType="com.xjt.entity.Dictcategory2" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from dictcategory2
+        where ParentCategory like  '%'+#{parentcategory}+'%'
+        <if test="category2 != null">
+            and Category2 like '%'+#{category2}+'%'
+        </if>
+    </select>
+</mapper>

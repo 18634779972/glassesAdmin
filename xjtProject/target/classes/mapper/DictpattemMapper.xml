@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xjt.dao.master.DictpattemDao" >
+
+    <resultMap id="BaseResultMap" type="com.xjt.entity.Dictpattem" >
+        <id column="Pattem" property="pattem" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <!--批量删除款型-->
+    <delete id="deleteByPrimaryKey" parameterType="java.util.List" >
+        delete from dictpattem
+        where Pattem in
+        <foreach collection="pattems" item="pattem" open="(" separator="," index="index" close=")">
+            #{pattem,jdbcType=VARCHAR}
+        </foreach>
+
+    </delete>
+
+    <insert id="insert" parameterType="com.xjt.entity.Dictpattem" >
+        insert into dictpattem (Pattem)
+        values (#{pattem,jdbcType=VARCHAR})
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.xjt.entity.Dictpattem" >
+        insert into dictpattem
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="pattem != null" >
+                Pattem,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="pattem != null" >
+                #{pattem,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <!--批量添加-->
+    <insert id="insertPattemsBatch" parameterType="java.util.List">
+        insert into dictpattem (Pattem)
+        values
+        <foreach collection="pattems" item="pattem" index="index" separator=",">
+            (#{pattem})
+        </foreach>
+    </insert>
+    <!--查看-->
+    <select id="queryAllPattems" parameterType="com.xjt.entity.Dictpattem" resultMap="BaseResultMap">
+        select Pattem from dictpattem
+        <where>
+            <if test="pattem != null" >
+               and Pattem like '%'+#{pattem,jdbcType=VARCHAR}+'%',
+            </if>
+        </where>
+    </select>
+</mapper>

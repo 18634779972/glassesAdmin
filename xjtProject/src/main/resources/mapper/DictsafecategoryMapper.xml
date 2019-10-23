@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xjt.dao.master.DictsafecategoryDao" >
+
+    <resultMap id="BaseResultMap" type="com.xjt.entity.Dictsafecategory" >
+        <id column="SafeCategory" property="safecategory" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.util.List" >
+        delete from dictsafecategory
+        where SafeCategory in
+          <foreach collection="safecategorys" item="cate" separator="," open="(" close=")" index="index">
+              #{cate,jdbcType=VARCHAR}
+          </foreach>
+
+    </delete>
+
+    <insert id="insert" parameterType="com.xjt.entity.Dictsafecategory" >
+        insert into dictsafecategory (SafeCategory)
+        values (#{safecategory,jdbcType=VARCHAR})
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.xjt.entity.Dictsafecategory" >
+        insert into dictsafecategory
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="safecategory != null" >
+                SafeCategory,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="safecategory != null" >
+                #{safecategory,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <!--批量增加安全级别-->
+    <insert id="insertSafeCategoryBatch" parameterType="java.util.List">
+         insert into dictsafecategory (SafeCategory)
+        values
+        <foreach collection="cates" item="cate" index="index" separator=",">
+            (#{cate})
+        </foreach>
+    </insert>
+    <!--查看所有安全级别-->
+    <select id="queryAllSafeCategory" resultMap="BaseResultMap" parameterType="com.xjt.entity.Dictsafecategory">
+        select SafeCategory
+          from dictsafecategory
+          <where>
+              <if test="safecategory != null">
+                  and SafeCategory = #{safecategory}
+              </if>
+          </where>
+    </select>
+
+</mapper>

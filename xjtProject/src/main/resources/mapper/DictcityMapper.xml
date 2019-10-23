@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xjt.dao.master.DictcityDao" >
+
+    <resultMap id="BaseResultMap" type="com.xjt.entity.Dictcity" >
+        <id column="City" property="city" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+        delete from dictcity
+        where City = #{city,jdbcType=VARCHAR}
+    </delete>
+
+    <insert id="insert" parameterType="com.xjt.entity.Dictcity" >
+        insert into dictcity (City)
+        values (#{city,jdbcType=VARCHAR})
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.xjt.entity.Dictcity" >
+        insert into dictcity
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="city != null" >
+                City,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="city != null" >
+                #{city,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+</mapper>

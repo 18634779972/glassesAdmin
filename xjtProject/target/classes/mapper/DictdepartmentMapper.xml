@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xjt.dao.master.DictdepartmentDao" >
+
+    <resultMap id="BaseResultMap" type="com.xjt.entity.Dictdepartment" >
+        <id column="Department" property="department" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <!--批量删除-->
+    <delete id="deleteByPrimaryKey" parameterType="java.util.List" >
+        delete from dictdepartment
+        where Department in
+        <foreach collection="departments" item="part" separator="," index="index" open="(" close=")">
+            #{department,jdbcType=VARCHAR}
+        </foreach>
+
+    </delete>
+
+    <insert id="insert" parameterType="com.xjt.entity.Dictdepartment" >
+        insert into dictdepartment (Department)
+        values (#{department,jdbcType=VARCHAR})
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.xjt.entity.Dictdepartment" >
+        insert into dictdepartment
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="department != null" >
+                Department,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="department != null" >
+                #{department,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <!--批量添加-->
+    <insert id="insertDepartmentsBatch" parameterType="java.util.List">
+        insert into dictdepartment (Department)
+        values
+          <foreach collection="departments" item="part" index="index"  separator=",">
+              (#{part})
+          </foreach>
+    </insert>
+    <!--查询部门-->
+    <select id="queryAllDepartments" parameterType="com.xjt.entity.Dictdepartment" resultMap="BaseResultMap">
+        select Department
+          from dictdepartment
+            <where>
+                <if test="department != null" >
+                   and  Department like '%'+ #{department,jdbcType=VARCHAR}+'%',
+                </if>
+            </where>
+    </select>
+</mapper>

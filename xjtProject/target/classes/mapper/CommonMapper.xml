@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xjt.dao.master.CommonDao" >
+
+    <!--批量增加 单字段-->
+    <insert id="insertBatch" >
+        insert into ${tableName}
+        values
+        <foreach collection="values" item="value" index="index" separator=",">
+            (#{value})
+        </foreach>
+    </insert>
+
+    <!--批量删除 单字段-->
+    <delete id="deleteBatch" >
+        delete from ${tableName}
+        where ${colName} in
+        <foreach collection="values" item="value" index="index" separator="," open="(" close=")">
+            #{value,jdbcType=VARCHAR}
+        </foreach>
+
+    </delete>
+    <!--查看数据-->
+    <select id="queryAllDatas" parameterType="com.xjt.dto.CommonReqDto" resultType="com.xjt.entity.CommonData">
+        select ${colName}
+         from ${tableName}
+          <where>
+              <if test="value != null">
+                  and ${colName} like concat ('%',#{value},'%')
+              </if>
+          </where>
+    </select>
+</mapper>

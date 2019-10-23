@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xjt.dao.other.DictBrandDao">
+
+    <resultMap id="BaseResultMap" type="com.xjt.entity.DictBrand" >
+        <id column="Brand" property="brand" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <!--批量添加品牌-->
+    <insert id="insert" parameterType="java.util.List">
+        <foreach collection="brands" item="brand" separator=";">
+            insert into DictBrand
+            (brand)
+            values(#{brand,jdbcType=VARCHAR})
+        </foreach>
+
+    </insert>
+    <!--查看所有品牌-->
+    <select id="queryAllBrands" resultMap="BaseResultMap" parameterType="com.xjt.entity.DictBrand">
+        SELECT * FROM DictBrand a
+        <where>
+            <if test="Brand != null">
+                and   a.brand LIKE '%'+#{Brand,jdbcType=VARCHAR}+'%'
+            </if>
+        </where>
+    </select>
+    <!--批量删除-->
+    <delete id="deleteByPrimaryKey" parameterType="java.util.List" >
+        delete from DictBrand
+        where brand in
+        <foreach collection="brands" item="brand" index="index" separator="," open="(" close=")">
+            #{brand,jdbcType=VARCHAR}
+        </foreach>
+
+    </delete>
+
+</mapper>

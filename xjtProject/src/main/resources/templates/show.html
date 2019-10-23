@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>show.html</title>
+	
+    <meta http-equiv="keywords" content="keyword1,keyword2,keyword3"/>
+    <meta http-equiv="description" content="this is my page"/>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    
+    <!--<link rel="stylesheet" type="text/css" href="./styles.css">-->
+
+  </head>
+  
+  <body>
+   <table>
+   	<tr>
+   		<th>ID</th>
+   		<th>TITLE</th>
+   		<th>SUMMARY</th>
+   		<th>操作</th>
+   	</tr>
+   	<!-- 使用thymeleaf进行迭代 -->
+   	<tr th:each="edoc : ${list}">
+   		<td th:text="${edoc.id}"></td>
+   		<td th:text="${edoc.title}"></td>
+   		<td th:text="${edoc.summary}"></td>
+   		<td><a th:href="@{/edoc/findById(id=${edoc.id})}">更新</a></td>
+   	</tr>
+   
+   </table>
+  </body>
+</html>
