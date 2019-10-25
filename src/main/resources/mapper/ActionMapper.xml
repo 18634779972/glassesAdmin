@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xjt.dao.master.ActionDao" >
+
+    <resultMap id="BaseResultMap" type="com.xjt.entity.Action" >
+        <id column="actionid" property="actionid" jdbcType="VARCHAR" />
+        <result column="action_name" property="actionName" jdbcType="VARCHAR" />
+        <result column="action_column_id" property="actionColumnId" jdbcType="VARCHAR" />
+        <result column="action" property="action" jdbcType="VARCHAR" />
+
+        <result column="view_mode" property="viewMode" jdbcType="VARCHAR" />
+        <result column="delete_flag" property="deleteFlag" jdbcType="BIGINT" />
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        actionid, action_name, action_column_id, action,  view_mode, delete_flag
+    </sql>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        select 
+        <include refid="Base_Column_List" />
+        from action
+        where actionid = #{actionid,jdbcType=VARCHAR}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+        delete from action
+        where actionid = #{actionid,jdbcType=VARCHAR}
+    </delete>
+
+    <insert id="insert" parameterType="com.xjt.entity.Action" >
+        insert into action (actionid, action_name, action_column_id, 
+            action,  view_mode,
+            delete_flag)
+        values (#{actionid,jdbcType=VARCHAR}, #{actionName,jdbcType=VARCHAR}, #{actionColumnId,jdbcType=VARCHAR},
+            #{action,jdbcType=VARCHAR},  #{viewMode,jdbcType=VARCHAR},
+            #{deleteFlag,jdbcType=BIGINT})
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.xjt.entity.Action" >
+        insert into action
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="actionid != null" >
+                actionid,
+            </if>
+            <if test="actionName != null" >
+                action_name,
+            </if>
+            <if test="actionColumnId != null" >
+                action_column_id,
+            </if>
+            <if test="action != null" >
+                action,
+            </if>
+
+            <if test="viewMode != null" >
+                view_mode,
+            </if>
+            <if test="deleteFlag != null" >
+                delete_flag,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="actionid != null" >
+                #{actionid,jdbcType=VARCHAR},
+            </if>
+            <if test="actionName != null" >
+                #{actionName,jdbcType=VARCHAR},
+            </if>
+            <if test="actionColumnId != null" >
+                #{actionColumnId,jdbcType=VARCHAR},
+            </if>
+            <if test="action != null" >
+                #{action,jdbcType=VARCHAR},
+            </if>
+
+            <if test="viewMode != null" >
+                #{viewMode,jdbcType=VARCHAR},
+            </if>
+            <if test="deleteFlag != null" >
+                #{deleteFlag,jdbcType=BIGINT},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.xjt.entity.Action" >
+        update action
+        <set >
+            <if test="actionName != null" >
+                action_name = #{actionName,jdbcType=VARCHAR},
+            </if>
+            <if test="actionColumnId != null" >
+                action_column_id = #{actionColumnId,jdbcType=VARCHAR},
+            </if>
+            <if test="action != null" >
+                action = #{action,jdbcType=VARCHAR},
+            </if>
+
+            <if test="viewMode != null" >
+                view_mode = #{viewMode,jdbcType=VARCHAR},
+            </if>
+            <if test="deleteFlag != null" >
+                delete_flag = #{deleteFlag,jdbcType=BIGINT},
+            </if>
+        </set>
+        where actionid = #{actionid,jdbcType=VARCHAR}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.xjt.entity.Action" >
+        update action
+        set action_name = #{actionName,jdbcType=VARCHAR},
+            action_column_id = #{actionColumnId,jdbcType=VARCHAR},
+            action = #{action,jdbcType=VARCHAR},
+
+            view_mode = #{viewMode,jdbcType=VARCHAR},
+            delete_flag = #{deleteFlag,jdbcType=BIGINT}
+        where actionid = #{actionid,jdbcType=VARCHAR}
+    </update>
+    <!--查看组内对应的权限-->
+    <select id="queryActionByGroupId" parameterType="java.lang.String" resultMap="BaseResultMap">
+        SELECT t1.actionid,t1.action,t1.action_name FROM
+         `action` t1 INNER JOIN actiongroup t2
+            ON t1.actionid = t2.action
+              WHERE t2.group_id = #{groupId} AND t2.delete_flag = 1
+    </select>
+    <update id="updateDeleteFlag" parameterType="com.xjt.entity.Action">
+        update action
+        set  delete_flag = #{deleteFlag,jdbcType=BIGINT}
+        where actionid = #{actionid,jdbcType=VARCHAR}
+    </update>
+    <select id="queryActionsByCloumn" parameterType="java.lang.String" resultMap="BaseResultMap">
+         SELECT actionid,`action`,action_name FROM
+         `action`
+         where action_column_id = #{cloumnId}
+         and delete_flag = 1
+
+    </select>
+</mapper>

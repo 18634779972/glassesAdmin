@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xjt.dao.master.MastergroupDao" >
+
+    <resultMap id="BaseResultMap" type="com.xjt.entity.Mastergroup" >
+        <id column="id" property="id" jdbcType="VARCHAR" />
+        <result column="master_id" property="masterId" jdbcType="VARCHAR" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="group_id" property="groupId" jdbcType="VARCHAR" />
+        <result column="mender_id" property="menderId" jdbcType="VARCHAR" />
+        <result column="mender_name" property="menderName" jdbcType="VARCHAR" />
+        <result column="createdate" property="createdate" jdbcType="TIMESTAMP" />
+        <result column="delete_flag" property="deleteFlag" jdbcType="BIGINT" />
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        id, master_id, name, group_id, mender_id, mender_name, createdate, delete_flag
+    </sql>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        select 
+        <include refid="Base_Column_List" />
+        from mastergroup
+        where id = #{id,jdbcType=VARCHAR}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+        delete from mastergroup
+        where id = #{id,jdbcType=VARCHAR}
+    </delete>
+
+    <insert id="insert" parameterType="com.xjt.entity.Mastergroup" >
+        insert into mastergroup ( id,master_id, name,
+            group_id, mender_id, mender_name, 
+            createdate, delete_flag)
+        values (#{id}, #{masterId,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},
+            #{groupId,jdbcType=VARCHAR}, #{menderId,jdbcType=VARCHAR}, #{menderName,jdbcType=VARCHAR},
+            #{createdate,jdbcType=TIMESTAMP}, #{deleteFlag,jdbcType=BIGINT})
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.xjt.entity.Mastergroup" >
+        insert into mastergroup
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                id,
+            </if>
+            <if test="masterId != null" >
+                master_id,
+            </if>
+            <if test="name != null" >
+                name,
+            </if>
+            <if test="groupId != null" >
+                group_id,
+            </if>
+            <if test="menderId != null" >
+                mender_id,
+            </if>
+            <if test="menderName != null" >
+                mender_name,
+            </if>
+            <if test="createdate != null" >
+                createdate,
+            </if>
+            <if test="deleteFlag != null" >
+                delete_flag,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="masterId != null" >
+                #{masterId,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null" >
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="groupId != null" >
+                #{groupId,jdbcType=VARCHAR},
+            </if>
+            <if test="menderId != null" >
+                #{menderId,jdbcType=VARCHAR},
+            </if>
+            <if test="menderName != null" >
+                #{menderName,jdbcType=VARCHAR},
+            </if>
+            <if test="createdate != null" >
+                #{createdate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deleteFlag != null" >
+                #{deleteFlag,jdbcType=BIGINT},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.xjt.entity.Mastergroup" >
+        update mastergroup
+        <set >
+            <if test="masterId != null" >
+                master_id = #{masterId,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null" >
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="groupId != null" >
+                group_id = #{groupId,jdbcType=VARCHAR},
+            </if>
+            <if test="menderId != null" >
+                mender_id = #{menderId,jdbcType=VARCHAR},
+            </if>
+            <if test="menderName != null" >
+                mender_name = #{menderName,jdbcType=VARCHAR},
+            </if>
+            <if test="createdate != null" >
+                createdate = #{createdate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deleteFlag != null" >
+                delete_flag = #{deleteFlag,jdbcType=BIGINT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.xjt.entity.Mastergroup" >
+        update mastergroup
+        set master_id = #{masterId,jdbcType=VARCHAR},
+            name = #{name,jdbcType=VARCHAR},
+            group_id = #{groupId,jdbcType=VARCHAR},
+            mender_id = #{menderId,jdbcType=VARCHAR},
+            mender_name = #{menderName,jdbcType=VARCHAR},
+            createdate = #{createdate,jdbcType=TIMESTAMP},
+            delete_flag = #{deleteFlag,jdbcType=BIGINT}
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+    <!--组里批量添加用户-->
+    <insert id="insertMasterToGroupBatch" parameterType="java.util.List">
+         insert into mastergroup (id, master_id, name,
+            group_id, mender_id, mender_name,
+            createdate, delete_flag)
+        values
+        <foreach collection="mastergroups" item="e" index="index" separator=",">
+            ( #{e.id},#{e.masterId,jdbcType=VARCHAR}, #{e.name,jdbcType=VARCHAR},
+            #{e.groupId,jdbcType=VARCHAR}, #{e.menderId,jdbcType=VARCHAR}, #{e.menderName,jdbcType=VARCHAR},
+            #{e.createdate,jdbcType=TIMESTAMP}, #{e.deleteFlag,jdbcType=BIGINT})
+        </foreach>
+    </insert>
+    <!--批量更改组里成员有效值-->
+    <update id="updateDeleteFlagBatch" parameterType="com.xjt.dto.MastergroupReqDto">
+        update mastergroup
+          set  delete_flag = #{deleteFlag,jdbcType=BIGINT}
+          where  group_id = #{groupId,jdbcType=VARCHAR}
+          <if test="userIds != null">
+              and master_id in
+              <foreach collection="userIds" item="userId" index="index" separator="," open="(" close=")">
+                  #{userId}
+              </foreach>
+          </if>
+
+    </update>
+</mapper>

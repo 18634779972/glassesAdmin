@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xjt.dao.master.DictbrandDao" >
+
+    <resultMap id="BaseResultMap" type="com.xjt.entity.Dictbrand" >
+        <id column="id" property="id" jdbcType="VARCHAR" />
+        <result column="brand_name" property="brandName" jdbcType="VARCHAR" />
+        <result column="delete_flag" property="deleteFlag" jdbcType="BIGINT" />
+        <result column="master_id" property="masterId" jdbcType="VARCHAR" />
+        <result column="master_name" property="masterName" jdbcType="VARCHAR" />
+        <result column="createdate" property="createdate" jdbcType="TIMESTAMP" />
+        <result column="mender_id" property="menderId" jdbcType="VARCHAR" />
+        <result column="mender_name" property="menderName" jdbcType="VARCHAR" />
+        <result column="updatedate" property="updatedate" jdbcType="TIMESTAMP" />
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        id, brand_name, delete_flag, master_id, master_name, createdate, mender_id, mender_name, 
+        updatedate
+    </sql>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        select 
+        <include refid="Base_Column_List" />
+        from dictbrand
+        where id = #{id,jdbcType=VARCHAR}
+    </select>
+    <!--查看品牌信息-->
+    <select id="queryBrandById" parameterType="java.util.List" resultMap="BaseResultMap">
+        select  id, brand_name
+           from dictbrand
+        where id in
+          <foreach collection="ids" item="id" index="index" open="(" close=")" separator=",">
+              #{id,jdbcType=VARCHAR}
+          </foreach>
+        and delete_flag = 1
+
+    </select>
+    <select id="queryBrandList" resultMap="BaseResultMap">
+        select  id, brand_name
+           from dictbrand
+            where delete_flag = 1
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+        delete from dictbrand
+        where id = #{id,jdbcType=VARCHAR}
+    </delete>
+
+    <insert id="insert" parameterType="com.xjt.entity.Dictbrand" >
+        insert into dictbrand (id, brand_name, delete_flag, 
+            master_id, master_name, createdate, 
+            mender_id, mender_name, updatedate
+            )
+        values (#{id,jdbcType=VARCHAR}, #{brandName,jdbcType=VARCHAR}, #{deleteFlag,jdbcType=BIGINT}, 
+            #{masterId,jdbcType=VARCHAR}, #{masterName,jdbcType=VARCHAR}, #{createdate,jdbcType=TIMESTAMP}, 
+            #{menderId,jdbcType=VARCHAR}, #{menderName,jdbcType=VARCHAR}, #{updatedate,jdbcType=TIMESTAMP}
+            )
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.xjt.entity.Dictbrand" >
+        insert into dictbrand
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                id,
+            </if>
+            <if test="brandName != null" >
+                brand_name,
+            </if>
+            <if test="deleteFlag != null" >
+                delete_flag,
+            </if>
+            <if test="masterId != null" >
+                master_id,
+            </if>
+            <if test="masterName != null" >
+                master_name,
+            </if>
+            <if test="createdate != null" >
+                createdate,
+            </if>
+            <if test="menderId != null" >
+                mender_id,
+            </if>
+            <if test="menderName != null" >
+                mender_name,
+            </if>
+            <if test="updatedate != null" >
+                updatedate,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="brandName != null" >
+                #{brandName,jdbcType=VARCHAR},
+            </if>
+            <if test="deleteFlag != null" >
+                #{deleteFlag,jdbcType=BIGINT},
+            </if>
+            <if test="masterId != null" >
+                #{masterId,jdbcType=VARCHAR},
+            </if>
+            <if test="masterName != null" >
+                #{masterName,jdbcType=VARCHAR},
+            </if>
+            <if test="createdate != null" >
+                #{createdate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="menderId != null" >
+                #{menderId,jdbcType=VARCHAR},
+            </if>
+            <if test="menderName != null" >
+                #{menderName,jdbcType=VARCHAR},
+            </if>
+            <if test="updatedate != null" >
+                #{updatedate,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.xjt.entity.Dictbrand" >
+        update dictbrand
+        <set >
+            <if test="brandName != null" >
+                brand_name = #{brandName,jdbcType=VARCHAR},
+            </if>
+            <if test="deleteFlag != null" >
+                delete_flag = #{deleteFlag,jdbcType=BIGINT},
+            </if>
+            <if test="masterId != null" >
+                master_id = #{masterId,jdbcType=VARCHAR},
+            </if>
+            <if test="masterName != null" >
+                master_name = #{masterName,jdbcType=VARCHAR},
+            </if>
+            <if test="createdate != null" >
+                createdate = #{createdate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="menderId != null" >
+                mender_id = #{menderId,jdbcType=VARCHAR},
+            </if>
+            <if test="menderName != null" >
+                mender_name = #{menderName,jdbcType=VARCHAR},
+            </if>
+            <if test="updatedate != null" >
+                updatedate = #{updatedate,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.xjt.entity.Dictbrand" >
+        update dictbrand
+        set brand_name = #{brandName,jdbcType=VARCHAR},
+            delete_flag = #{deleteFlag,jdbcType=BIGINT},
+            master_id = #{masterId,jdbcType=VARCHAR},
+            master_name = #{masterName,jdbcType=VARCHAR},
+            createdate = #{createdate,jdbcType=TIMESTAMP},
+            mender_id = #{menderId,jdbcType=VARCHAR},
+            mender_name = #{menderName,jdbcType=VARCHAR},
+            updatedate = #{updatedate,jdbcType=TIMESTAMP}
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+    <update id="updateDeleteFlag" parameterType="com.xjt.entity.Dictbrand">
+         update dictbrand
+        set  delete_flag = #{deleteFlag,jdbcType=BIGINT}
+           where id = #{id,jdbcType=VARCHAR}
+    </update>
+</mapper>

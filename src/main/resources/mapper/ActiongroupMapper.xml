@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xjt.dao.master.ActiongroupDao" >
+
+    <resultMap id="BaseResultMap" type="com.xjt.entity.Actiongroup" >
+        <id column="id" property="id" jdbcType="VARCHAR" />
+        <result column="action" property="action" jdbcType="VARCHAR" />
+        <result column="group_id" property="groupId" jdbcType="VARCHAR" />
+        <result column="master_id" property="masterId" jdbcType="VARCHAR" />
+        <result column="master_name" property="masterName" jdbcType="VARCHAR" />
+        <result column="createdate" property="createdate" jdbcType="TIMESTAMP" />
+        <result column="delete_flag" property="deleteFlag" jdbcType="BIGINT" />
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        id, action, group_id, master_id, master_name, createdate, delete_flag
+    </sql>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        select 
+        <include refid="Base_Column_List" />
+        from actiongroup
+        where id = #{id,jdbcType=VARCHAR}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+        delete from actiongroup
+        where id = #{id,jdbcType=VARCHAR}
+    </delete>
+
+    <insert id="insert" parameterType="com.xjt.entity.Actiongroup" >
+        insert into actiongroup (id, action, group_id, 
+            master_id, master_name, createdate, 
+            delete_flag)
+        values (#{id,jdbcType=VARCHAR}, #{action,jdbcType=VARCHAR}, #{groupId,jdbcType=VARCHAR},
+            #{masterId,jdbcType=VARCHAR}, #{masterName,jdbcType=VARCHAR}, #{createdate,jdbcType=TIMESTAMP},
+            #{deleteFlag,jdbcType=BIGINT})
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.xjt.entity.Actiongroup" >
+        insert into actiongroup
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                id,
+            </if>
+            <if test="action != null" >
+                action,
+            </if>
+            <if test="groupId != null" >
+                group_id,
+            </if>
+            <if test="masterId != null" >
+                master_id,
+            </if>
+            <if test="masterName != null" >
+                master_name,
+            </if>
+            <if test="createdate != null" >
+                createdate,
+            </if>
+            <if test="deleteFlag != null" >
+                delete_flag,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="action != null" >
+                #{action,jdbcType=VARCHAR},
+            </if>
+            <if test="groupId != null" >
+                #{groupId,jdbcType=VARCHAR},
+            </if>
+            <if test="masterId != null" >
+                #{masterId,jdbcType=VARCHAR},
+            </if>
+            <if test="masterName != null" >
+                #{masterName,jdbcType=VARCHAR},
+            </if>
+            <if test="createdate != null" >
+                #{createdate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deleteFlag != null" >
+                #{deleteFlag,jdbcType=BIGINT},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.xjt.entity.Actiongroup" >
+        update actiongroup
+        <set >
+            <if test="action != null" >
+                action = #{action,jdbcType=VARCHAR},
+            </if>
+            <if test="groupId != null" >
+                group_id = #{groupId,jdbcType=VARCHAR},
+            </if>
+            <if test="masterId != null" >
+                master_id = #{masterId,jdbcType=VARCHAR},
+            </if>
+            <if test="masterName != null" >
+                master_name = #{masterName,jdbcType=VARCHAR},
+            </if>
+            <if test="createdate != null" >
+                createdate = #{createdate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deleteFlag != null" >
+                delete_flag = #{deleteFlag,jdbcType=BIGINT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.xjt.entity.Actiongroup" >
+        update actiongroup
+        set action = #{action,jdbcType=VARCHAR},
+            group_id = #{groupId,jdbcType=VARCHAR},
+            master_id = #{masterId,jdbcType=VARCHAR},
+            master_name = #{masterName,jdbcType=VARCHAR},
+            createdate = #{createdate,jdbcType=TIMESTAMP},
+            delete_flag = #{deleteFlag,jdbcType=BIGINT}
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+    <!--为组批量添加权限-->
+    <insert id="insertActionForGroupBatch" parameterType="java.util.List">
+        insert into actiongroup ( id,`action`, group_id,
+            master_id, master_name, createdate, 
+            delete_flag)
+        values 
+            <foreach collection="actiongroups" item="e" separator=",">
+                (  #{e.id,jdbcType=VARCHAR},#{e.action,jdbcType=BIGINT}, #{e.groupId,jdbcType=BIGINT},
+                #{e.masterId,jdbcType=VARCHAR}, #{e.masterName,jdbcType=VARCHAR}, #{e.createdate,jdbcType=TIMESTAMP},
+                #{e.deleteFlag,jdbcType=BIGINT})
+            </foreach>
+    </insert>
+    <!--删除组内对应的权限-->
+    <update id="deleteActionFromGroup" parameterType="com.xjt.dto.ActiongroupReqDto">
+        update actiongroup
+        set  delete_flag = #{deleteFlag,jdbcType=BIGINT}
+          where group_id = #{groupId,jdbcType=VARCHAR}
+            <if test="actionIds != null">
+                and  `action` in
+                <foreach collection="actionIds" item="actionId" separator="," open="(" close=")" index="index">
+                    #{actionId}
+                </foreach>
+            </if>
+
+    </update>
+</mapper>

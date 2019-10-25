@@ -1,0 +1,491 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xjt.dao.master.SupplyDao" >
+
+    <resultMap id="BaseResultMap" type="com.xjt.entity.Supply" >
+        <id column="Supply_No" property="supplyNo" jdbcType="VARCHAR" />
+        <result column="Supply_Abv" property="supplyAbv" jdbcType="VARCHAR" />
+        <result column="Supply_Na" property="supplyNa" jdbcType="VARCHAR" />
+        <result column="RegisterNumber" property="registernumber" jdbcType="VARCHAR" />
+        <result column="RegisterOrg" property="registerorg" jdbcType="VARCHAR" />
+        <result column="BusinessArea" property="businessarea" jdbcType="LONGVARCHAR" />
+        <result column="RegisterDate" property="registerdate" jdbcType="TIMESTAMP" />
+        <result column="ExpiryDate" property="expirydate" jdbcType="TIMESTAMP" />
+        <result column="RegisterMomey" property="registermomey" jdbcType="DECIMAL" />
+        <result column="Keyman" property="keyman" jdbcType="VARCHAR" />
+        <result column="Fax" property="fax" jdbcType="VARCHAR" />
+        <result column="Tele1" property="tele1" jdbcType="VARCHAR" />
+        <result column="Tele2" property="tele2" jdbcType="VARCHAR" />
+        <result column="RegisterAddress" property="registeraddress" jdbcType="VARCHAR" />
+        <result column="Address" property="address" jdbcType="VARCHAR" />
+        <result column="Region" property="region" jdbcType="VARCHAR" />
+        <result column="E_mail" property="eMail" jdbcType="VARCHAR" />
+        <result column="Zipcode" property="zipcode" jdbcType="VARCHAR" />
+        <result column="TaxRate" property="taxrate" jdbcType="DECIMAL" />
+        <result column="Type" property="type" jdbcType="INTEGER" />
+        <result column="cGroup" property="cgroup" jdbcType="VARCHAR" />
+        <result column="Xingzhi" property="xingzhi" jdbcType="VARCHAR" />
+        <result column="Province" property="province" jdbcType="VARCHAR" />
+        <result column="City" property="city" jdbcType="VARCHAR" />
+        <result column="Sort" property="sort" jdbcType="VARCHAR" />
+        <result column="BalanceMode" property="balancemode" jdbcType="VARCHAR" />
+        <result column="WebAddress" property="webaddress" jdbcType="VARCHAR" />
+        <result column="RebateCalculateType" property="rebatecalculatetype" jdbcType="INTEGER" />
+        <result column="Rebate" property="rebate" jdbcType="DECIMAL" />
+        <result column="Tag" property="tag" jdbcType="BIT" />
+        <result column="ShutOut" property="shutout" jdbcType="BIT" />
+        <result column="ProcessUser" property="processuser" jdbcType="VARCHAR" />
+        <result column="DocDate" property="docdate" jdbcType="TIMESTAMP" />
+        <result column="UpdateTimeStamp" property="updatetimestamp" jdbcType="TIMESTAMP" />
+        <result column="Remark" property="remark" jdbcType="LONGVARCHAR" />
+        <result column="MRID" property="mrid" jdbcType="VARCHAR" />
+        <result column="BRID" property="brid" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        Supply_No, Supply_Abv, Supply_Na, RegisterNumber, RegisterOrg, BusinessArea, RegisterDate, 
+        ExpiryDate, RegisterMomey, Keyman, Fax, Tele1, Tele2, RegisterAddress, Address, Region, 
+        E_mail, Zipcode, TaxRate, Type, cGroup, Xingzhi, Province, City, Sort, BalanceMode, 
+        WebAddress, RebateCalculateType, Rebate, Tag, ShutOut, ProcessUser, DocDate, UpdateTimeStamp, 
+        Remark, MRID, BRID
+    </sql>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        select 
+        <include refid="Base_Column_List" />
+        from supply
+        where Supply_No = #{supplyNo,jdbcType=VARCHAR}
+    </select>
+
+    <select id="querySupplyList" parameterType="java.util.List" resultMap="BaseResultMap">
+        select  Supply_No, Supply_Abv, Supply_Na, RegisterNumber, RegisterOrg, BusinessArea, RegisterDate,
+        ExpiryDate, RegisterMomey, Keyman, Fax, Tele1, Tele2, RegisterAddress, Address, Region,
+        E_mail, Zipcode
+          from supply
+        where Supply_No in
+          <foreach collection="ids" item="id" separator="," open="(" close=")" index="index" >
+              #{id,jdbcType=VARCHAR}
+          </foreach>
+
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+        delete from supply
+        where Supply_No = #{supplyNo,jdbcType=VARCHAR}
+    </delete>
+
+    <insert id="insert" parameterType="com.xjt.entity.Supply" >
+        insert into supply (Supply_No, Supply_Abv, Supply_Na, 
+            RegisterNumber, RegisterOrg, BusinessArea, 
+            RegisterDate, ExpiryDate, RegisterMomey, 
+            Keyman, Fax, Tele1, 
+            Tele2, RegisterAddress, Address, 
+            Region, E_mail, Zipcode, 
+            TaxRate, Type, cGroup, 
+            Xingzhi, Province, City, 
+            Sort, BalanceMode, WebAddress, 
+            RebateCalculateType, Rebate, Tag, 
+            ShutOut, ProcessUser, DocDate, 
+            UpdateTimeStamp, Remark, MRID, 
+            BRID)
+        values (#{supplyNo,jdbcType=VARCHAR}, #{supplyAbv,jdbcType=VARCHAR}, #{supplyNa,jdbcType=VARCHAR}, 
+            #{registernumber,jdbcType=VARCHAR}, #{registerorg,jdbcType=VARCHAR}, #{businessarea,jdbcType=LONGVARCHAR}, 
+            #{registerdate,jdbcType=TIMESTAMP}, #{expirydate,jdbcType=TIMESTAMP}, #{registermomey,jdbcType=DECIMAL}, 
+            #{keyman,jdbcType=VARCHAR}, #{fax,jdbcType=VARCHAR}, #{tele1,jdbcType=VARCHAR}, 
+            #{tele2,jdbcType=VARCHAR}, #{registeraddress,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
+            #{region,jdbcType=VARCHAR}, #{eMail,jdbcType=VARCHAR}, #{zipcode,jdbcType=VARCHAR}, 
+            #{taxrate,jdbcType=DECIMAL}, #{type,jdbcType=INTEGER}, #{cgroup,jdbcType=VARCHAR}, 
+            #{xingzhi,jdbcType=VARCHAR}, #{province,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, 
+            #{sort,jdbcType=VARCHAR}, #{balancemode,jdbcType=VARCHAR}, #{webaddress,jdbcType=VARCHAR}, 
+            #{rebatecalculatetype,jdbcType=INTEGER}, #{rebate,jdbcType=DECIMAL}, #{tag,jdbcType=BIT}, 
+            #{shutout,jdbcType=BIT}, #{processuser,jdbcType=VARCHAR}, #{docdate,jdbcType=TIMESTAMP}, 
+            #{updatetimestamp,jdbcType=TIMESTAMP}, #{remark,jdbcType=LONGVARCHAR}, #{mrid,jdbcType=VARCHAR}, 
+            #{brid,jdbcType=VARCHAR})
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.xjt.entity.Supply" >
+        insert into supply
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="supplyNo != null" >
+                Supply_No,
+            </if>
+            <if test="supplyAbv != null" >
+                Supply_Abv,
+            </if>
+            <if test="supplyNa != null" >
+                Supply_Na,
+            </if>
+            <if test="registernumber != null" >
+                RegisterNumber,
+            </if>
+            <if test="registerorg != null" >
+                RegisterOrg,
+            </if>
+            <if test="businessarea != null" >
+                BusinessArea,
+            </if>
+            <if test="registerdate != null" >
+                RegisterDate,
+            </if>
+            <if test="expirydate != null" >
+                ExpiryDate,
+            </if>
+            <if test="registermomey != null" >
+                RegisterMomey,
+            </if>
+            <if test="keyman != null" >
+                Keyman,
+            </if>
+            <if test="fax != null" >
+                Fax,
+            </if>
+            <if test="tele1 != null" >
+                Tele1,
+            </if>
+            <if test="tele2 != null" >
+                Tele2,
+            </if>
+            <if test="registeraddress != null" >
+                RegisterAddress,
+            </if>
+            <if test="address != null" >
+                Address,
+            </if>
+            <if test="region != null" >
+                Region,
+            </if>
+            <if test="eMail != null" >
+                E_mail,
+            </if>
+            <if test="zipcode != null" >
+                Zipcode,
+            </if>
+            <if test="taxrate != null" >
+                TaxRate,
+            </if>
+            <if test="type != null" >
+                Type,
+            </if>
+            <if test="cgroup != null" >
+                cGroup,
+            </if>
+            <if test="xingzhi != null" >
+                Xingzhi,
+            </if>
+            <if test="province != null" >
+                Province,
+            </if>
+            <if test="city != null" >
+                City,
+            </if>
+            <if test="sort != null" >
+                Sort,
+            </if>
+            <if test="balancemode != null" >
+                BalanceMode,
+            </if>
+            <if test="webaddress != null" >
+                WebAddress,
+            </if>
+            <if test="rebatecalculatetype != null" >
+                RebateCalculateType,
+            </if>
+            <if test="rebate != null" >
+                Rebate,
+            </if>
+            <if test="tag != null" >
+                Tag,
+            </if>
+            <if test="shutout != null" >
+                ShutOut,
+            </if>
+            <if test="processuser != null" >
+                ProcessUser,
+            </if>
+            <if test="docdate != null" >
+                DocDate,
+            </if>
+            <if test="updatetimestamp != null" >
+                UpdateTimeStamp,
+            </if>
+            <if test="remark != null" >
+                Remark,
+            </if>
+            <if test="mrid != null" >
+                MRID,
+            </if>
+            <if test="brid != null" >
+                BRID,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="supplyNo != null" >
+                #{supplyNo,jdbcType=VARCHAR},
+            </if>
+            <if test="supplyAbv != null" >
+                #{supplyAbv,jdbcType=VARCHAR},
+            </if>
+            <if test="supplyNa != null" >
+                #{supplyNa,jdbcType=VARCHAR},
+            </if>
+            <if test="registernumber != null" >
+                #{registernumber,jdbcType=VARCHAR},
+            </if>
+            <if test="registerorg != null" >
+                #{registerorg,jdbcType=VARCHAR},
+            </if>
+            <if test="businessarea != null" >
+                #{businessarea,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="registerdate != null" >
+                #{registerdate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="expirydate != null" >
+                #{expirydate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="registermomey != null" >
+                #{registermomey,jdbcType=DECIMAL},
+            </if>
+            <if test="keyman != null" >
+                #{keyman,jdbcType=VARCHAR},
+            </if>
+            <if test="fax != null" >
+                #{fax,jdbcType=VARCHAR},
+            </if>
+            <if test="tele1 != null" >
+                #{tele1,jdbcType=VARCHAR},
+            </if>
+            <if test="tele2 != null" >
+                #{tele2,jdbcType=VARCHAR},
+            </if>
+            <if test="registeraddress != null" >
+                #{registeraddress,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null" >
+                #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="region != null" >
+                #{region,jdbcType=VARCHAR},
+            </if>
+            <if test="eMail != null" >
+                #{eMail,jdbcType=VARCHAR},
+            </if>
+            <if test="zipcode != null" >
+                #{zipcode,jdbcType=VARCHAR},
+            </if>
+            <if test="taxrate != null" >
+                #{taxrate,jdbcType=DECIMAL},
+            </if>
+            <if test="type != null" >
+                #{type,jdbcType=INTEGER},
+            </if>
+            <if test="cgroup != null" >
+                #{cgroup,jdbcType=VARCHAR},
+            </if>
+            <if test="xingzhi != null" >
+                #{xingzhi,jdbcType=VARCHAR},
+            </if>
+            <if test="province != null" >
+                #{province,jdbcType=VARCHAR},
+            </if>
+            <if test="city != null" >
+                #{city,jdbcType=VARCHAR},
+            </if>
+            <if test="sort != null" >
+                #{sort,jdbcType=VARCHAR},
+            </if>
+            <if test="balancemode != null" >
+                #{balancemode,jdbcType=VARCHAR},
+            </if>
+            <if test="webaddress != null" >
+                #{webaddress,jdbcType=VARCHAR},
+            </if>
+            <if test="rebatecalculatetype != null" >
+                #{rebatecalculatetype,jdbcType=INTEGER},
+            </if>
+            <if test="rebate != null" >
+                #{rebate,jdbcType=DECIMAL},
+            </if>
+            <if test="tag != null" >
+                #{tag,jdbcType=BIT},
+            </if>
+            <if test="shutout != null" >
+                #{shutout,jdbcType=BIT},
+            </if>
+            <if test="processuser != null" >
+                #{processuser,jdbcType=VARCHAR},
+            </if>
+            <if test="docdate != null" >
+                #{docdate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updatetimestamp != null" >
+                #{updatetimestamp,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remark != null" >
+                #{remark,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="mrid != null" >
+                #{mrid,jdbcType=VARCHAR},
+            </if>
+            <if test="brid != null" >
+                #{brid,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.xjt.entity.Supply" >
+        update supply
+        <set >
+            <if test="supplyAbv != null" >
+                Supply_Abv = #{supplyAbv,jdbcType=VARCHAR},
+            </if>
+            <if test="supplyNa != null" >
+                Supply_Na = #{supplyNa,jdbcType=VARCHAR},
+            </if>
+            <if test="registernumber != null" >
+                RegisterNumber = #{registernumber,jdbcType=VARCHAR},
+            </if>
+            <if test="registerorg != null" >
+                RegisterOrg = #{registerorg,jdbcType=VARCHAR},
+            </if>
+            <if test="businessarea != null" >
+                BusinessArea = #{businessarea,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="registerdate != null" >
+                RegisterDate = #{registerdate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="expirydate != null" >
+                ExpiryDate = #{expirydate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="registermomey != null" >
+                RegisterMomey = #{registermomey,jdbcType=DECIMAL},
+            </if>
+            <if test="keyman != null" >
+                Keyman = #{keyman,jdbcType=VARCHAR},
+            </if>
+            <if test="fax != null" >
+                Fax = #{fax,jdbcType=VARCHAR},
+            </if>
+            <if test="tele1 != null" >
+                Tele1 = #{tele1,jdbcType=VARCHAR},
+            </if>
+            <if test="tele2 != null" >
+                Tele2 = #{tele2,jdbcType=VARCHAR},
+            </if>
+            <if test="registeraddress != null" >
+                RegisterAddress = #{registeraddress,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null" >
+                Address = #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="region != null" >
+                Region = #{region,jdbcType=VARCHAR},
+            </if>
+            <if test="eMail != null" >
+                E_mail = #{eMail,jdbcType=VARCHAR},
+            </if>
+            <if test="zipcode != null" >
+                Zipcode = #{zipcode,jdbcType=VARCHAR},
+            </if>
+            <if test="taxrate != null" >
+                TaxRate = #{taxrate,jdbcType=DECIMAL},
+            </if>
+            <if test="type != null" >
+                Type = #{type,jdbcType=INTEGER},
+            </if>
+            <if test="cgroup != null" >
+                cGroup = #{cgroup,jdbcType=VARCHAR},
+            </if>
+            <if test="xingzhi != null" >
+                Xingzhi = #{xingzhi,jdbcType=VARCHAR},
+            </if>
+            <if test="province != null" >
+                Province = #{province,jdbcType=VARCHAR},
+            </if>
+            <if test="city != null" >
+                City = #{city,jdbcType=VARCHAR},
+            </if>
+            <if test="sort != null" >
+                Sort = #{sort,jdbcType=VARCHAR},
+            </if>
+            <if test="balancemode != null" >
+                BalanceMode = #{balancemode,jdbcType=VARCHAR},
+            </if>
+            <if test="webaddress != null" >
+                WebAddress = #{webaddress,jdbcType=VARCHAR},
+            </if>
+            <if test="rebatecalculatetype != null" >
+                RebateCalculateType = #{rebatecalculatetype,jdbcType=INTEGER},
+            </if>
+            <if test="rebate != null" >
+                Rebate = #{rebate,jdbcType=DECIMAL},
+            </if>
+            <if test="tag != null" >
+                Tag = #{tag,jdbcType=BIT},
+            </if>
+            <if test="shutout != null" >
+                ShutOut = #{shutout,jdbcType=BIT},
+            </if>
+            <if test="processuser != null" >
+                ProcessUser = #{processuser,jdbcType=VARCHAR},
+            </if>
+            <if test="docdate != null" >
+                DocDate = #{docdate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updatetimestamp != null" >
+                UpdateTimeStamp = #{updatetimestamp,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remark != null" >
+                Remark = #{remark,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="mrid != null" >
+                MRID = #{mrid,jdbcType=VARCHAR},
+            </if>
+            <if test="brid != null" >
+                BRID = #{brid,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where Supply_No = #{supplyNo,jdbcType=VARCHAR}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.xjt.entity.Supply" >
+        update supply
+        set Supply_Abv = #{supplyAbv,jdbcType=VARCHAR},
+            Supply_Na = #{supplyNa,jdbcType=VARCHAR},
+            RegisterNumber = #{registernumber,jdbcType=VARCHAR},
+            RegisterOrg = #{registerorg,jdbcType=VARCHAR},
+            BusinessArea = #{businessarea,jdbcType=LONGVARCHAR},
+            RegisterDate = #{registerdate,jdbcType=TIMESTAMP},
+            ExpiryDate = #{expirydate,jdbcType=TIMESTAMP},
+            RegisterMomey = #{registermomey,jdbcType=DECIMAL},
+            Keyman = #{keyman,jdbcType=VARCHAR},
+            Fax = #{fax,jdbcType=VARCHAR},
+            Tele1 = #{tele1,jdbcType=VARCHAR},
+            Tele2 = #{tele2,jdbcType=VARCHAR},
+            RegisterAddress = #{registeraddress,jdbcType=VARCHAR},
+            Address = #{address,jdbcType=VARCHAR},
+            Region = #{region,jdbcType=VARCHAR},
+            E_mail = #{eMail,jdbcType=VARCHAR},
+            Zipcode = #{zipcode,jdbcType=VARCHAR},
+            TaxRate = #{taxrate,jdbcType=DECIMAL},
+            Type = #{type,jdbcType=INTEGER},
+            cGroup = #{cgroup,jdbcType=VARCHAR},
+            Xingzhi = #{xingzhi,jdbcType=VARCHAR},
+            Province = #{province,jdbcType=VARCHAR},
+            City = #{city,jdbcType=VARCHAR},
+            Sort = #{sort,jdbcType=VARCHAR},
+            BalanceMode = #{balancemode,jdbcType=VARCHAR},
+            WebAddress = #{webaddress,jdbcType=VARCHAR},
+            RebateCalculateType = #{rebatecalculatetype,jdbcType=INTEGER},
+            Rebate = #{rebate,jdbcType=DECIMAL},
+            Tag = #{tag,jdbcType=BIT},
+            ShutOut = #{shutout,jdbcType=BIT},
+            ProcessUser = #{processuser,jdbcType=VARCHAR},
+            DocDate = #{docdate,jdbcType=TIMESTAMP},
+            UpdateTimeStamp = #{updatetimestamp,jdbcType=TIMESTAMP},
+            Remark = #{remark,jdbcType=LONGVARCHAR},
+            MRID = #{mrid,jdbcType=VARCHAR},
+            BRID = #{brid,jdbcType=VARCHAR}
+        where Supply_No = #{supplyNo,jdbcType=VARCHAR}
+    </update>
+</mapper>

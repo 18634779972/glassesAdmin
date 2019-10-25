@@ -1,0 +1,405 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xjt.dao.master.WarehouseDao" >
+
+    <resultMap id="BaseResultMap" type="com.xjt.entity.Warehouse" >
+        <id column="Warehouse_No" property="warehouseNo" jdbcType="VARCHAR" />
+        <result column="Warehouse_Na" property="warehouseNa" jdbcType="VARCHAR" />
+        <result column="Address" property="address" jdbcType="VARCHAR" />
+        <result column="Tele" property="tele" jdbcType="VARCHAR" />
+        <result column="Zipcode" property="zipcode" jdbcType="VARCHAR" />
+        <result column="Keyman" property="keyman" jdbcType="VARCHAR" />
+        <result column="Tag" property="tag" jdbcType="BIT" />
+        <result column="E_mail" property="eMail" jdbcType="VARCHAR" />
+        <result column="Region" property="region" jdbcType="VARCHAR" />
+        <result column="Fax" property="fax" jdbcType="VARCHAR" />
+        <result column="AllowMinusStock" property="allowminusstock" jdbcType="BIT" />
+        <result column="ShutOut" property="shutout" jdbcType="BIT" />
+        <result column="Item" property="item" jdbcType="VARCHAR" />
+        <result column="Discount" property="discount" jdbcType="DECIMAL" />
+        <result column="QiDiscount" property="qidiscount" jdbcType="DECIMAL" />
+        <result column="BuDiscount" property="budiscount" jdbcType="DECIMAL" />
+        <result column="PuDiscount" property="pudiscount" jdbcType="DECIMAL" />
+        <result column="MaiDiscount" property="maidiscount" jdbcType="DECIMAL" />
+        <result column="RepOffice_ID" property="repofficeId" jdbcType="VARCHAR" />
+        <result column="ChannelID" property="channelid" jdbcType="VARCHAR" />
+        <result column="WareGroup" property="waregroup" jdbcType="VARCHAR" />
+        <result column="AccountCustomer_ID" property="accountcustomerId" jdbcType="VARCHAR" />
+        <result column="Insurance" property="insurance" jdbcType="VARCHAR" />
+        <result column="WarehousePrice" property="warehouseprice" jdbcType="VARCHAR" />
+        <result column="FreightCorp" property="freightcorp" jdbcType="VARCHAR" />
+        <result column="IsCalcCost" property="iscalccost" jdbcType="BIT" />
+        <result column="IsCustomize" property="iscustomize" jdbcType="BIT" />
+        <result column="Supply_No" property="supplyNo" jdbcType="VARCHAR" />
+        <result column="ID" property="id" jdbcType="VARCHAR" />
+        <result column="Company_ID" property="companyId" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        Warehouse_No, Warehouse_Na, Address, Tele, Zipcode, Keyman, Tag, E_mail, Region, 
+        Fax, AllowMinusStock, ShutOut, Item, Discount, QiDiscount, BuDiscount, PuDiscount, 
+        MaiDiscount, RepOffice_ID, ChannelID, WareGroup, AccountCustomer_ID, Insurance, WarehousePrice, 
+        FreightCorp, IsCalcCost, IsCustomize, Supply_No, ID, Company_ID
+    </sql>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        select 
+        <include refid="Base_Column_List" />
+        from warehouse
+        where Warehouse_No = #{warehouseNo,jdbcType=VARCHAR}
+    </select>
+
+    <select id="queryHouseList" resultMap="BaseResultMap" parameterType="java.util.List">
+        select Warehouse_No, Warehouse_Na, Address, Tele, Zipcode, Keyman
+           from warehouse
+        where Warehouse_No in
+          <foreach collection="ids" item="id" index="index" open="(" close=")" separator=",">
+              #{id,jdbcType=VARCHAR}
+          </foreach>
+
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+        delete from warehouse
+        where Warehouse_No = #{warehouseNo,jdbcType=VARCHAR}
+    </delete>
+
+    <insert id="insert" parameterType="com.xjt.entity.Warehouse" >
+        insert into warehouse (Warehouse_No, Warehouse_Na, Address, 
+            Tele, Zipcode, Keyman, 
+            Tag, E_mail, Region, Fax, 
+            AllowMinusStock, ShutOut, Item, 
+            Discount, QiDiscount, BuDiscount, 
+            PuDiscount, MaiDiscount, RepOffice_ID, 
+            ChannelID, WareGroup, AccountCustomer_ID, 
+            Insurance, WarehousePrice, FreightCorp, 
+            IsCalcCost, IsCustomize, Supply_No, 
+            ID, Company_ID)
+        values (#{warehouseNo,jdbcType=VARCHAR}, #{warehouseNa,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
+            #{tele,jdbcType=VARCHAR}, #{zipcode,jdbcType=VARCHAR}, #{keyman,jdbcType=VARCHAR}, 
+            #{tag,jdbcType=BIT}, #{eMail,jdbcType=VARCHAR}, #{region,jdbcType=VARCHAR}, #{fax,jdbcType=VARCHAR}, 
+            #{allowminusstock,jdbcType=BIT}, #{shutout,jdbcType=BIT}, #{item,jdbcType=VARCHAR}, 
+            #{discount,jdbcType=DECIMAL}, #{qidiscount,jdbcType=DECIMAL}, #{budiscount,jdbcType=DECIMAL}, 
+            #{pudiscount,jdbcType=DECIMAL}, #{maidiscount,jdbcType=DECIMAL}, #{repofficeId,jdbcType=VARCHAR}, 
+            #{channelid,jdbcType=VARCHAR}, #{waregroup,jdbcType=VARCHAR}, #{accountcustomerId,jdbcType=VARCHAR}, 
+            #{insurance,jdbcType=VARCHAR}, #{warehouseprice,jdbcType=VARCHAR}, #{freightcorp,jdbcType=VARCHAR}, 
+            #{iscalccost,jdbcType=BIT}, #{iscustomize,jdbcType=BIT}, #{supplyNo,jdbcType=VARCHAR}, 
+            #{id,jdbcType=VARCHAR}, #{companyId,jdbcType=VARCHAR})
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.xjt.entity.Warehouse" >
+        insert into warehouse
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="warehouseNo != null" >
+                Warehouse_No,
+            </if>
+            <if test="warehouseNa != null" >
+                Warehouse_Na,
+            </if>
+            <if test="address != null" >
+                Address,
+            </if>
+            <if test="tele != null" >
+                Tele,
+            </if>
+            <if test="zipcode != null" >
+                Zipcode,
+            </if>
+            <if test="keyman != null" >
+                Keyman,
+            </if>
+            <if test="tag != null" >
+                Tag,
+            </if>
+            <if test="eMail != null" >
+                E_mail,
+            </if>
+            <if test="region != null" >
+                Region,
+            </if>
+            <if test="fax != null" >
+                Fax,
+            </if>
+            <if test="allowminusstock != null" >
+                AllowMinusStock,
+            </if>
+            <if test="shutout != null" >
+                ShutOut,
+            </if>
+            <if test="item != null" >
+                Item,
+            </if>
+            <if test="discount != null" >
+                Discount,
+            </if>
+            <if test="qidiscount != null" >
+                QiDiscount,
+            </if>
+            <if test="budiscount != null" >
+                BuDiscount,
+            </if>
+            <if test="pudiscount != null" >
+                PuDiscount,
+            </if>
+            <if test="maidiscount != null" >
+                MaiDiscount,
+            </if>
+            <if test="repofficeId != null" >
+                RepOffice_ID,
+            </if>
+            <if test="channelid != null" >
+                ChannelID,
+            </if>
+            <if test="waregroup != null" >
+                WareGroup,
+            </if>
+            <if test="accountcustomerId != null" >
+                AccountCustomer_ID,
+            </if>
+            <if test="insurance != null" >
+                Insurance,
+            </if>
+            <if test="warehouseprice != null" >
+                WarehousePrice,
+            </if>
+            <if test="freightcorp != null" >
+                FreightCorp,
+            </if>
+            <if test="iscalccost != null" >
+                IsCalcCost,
+            </if>
+            <if test="iscustomize != null" >
+                IsCustomize,
+            </if>
+            <if test="supplyNo != null" >
+                Supply_No,
+            </if>
+            <if test="id != null" >
+                ID,
+            </if>
+            <if test="companyId != null" >
+                Company_ID,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="warehouseNo != null" >
+                #{warehouseNo,jdbcType=VARCHAR},
+            </if>
+            <if test="warehouseNa != null" >
+                #{warehouseNa,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null" >
+                #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="tele != null" >
+                #{tele,jdbcType=VARCHAR},
+            </if>
+            <if test="zipcode != null" >
+                #{zipcode,jdbcType=VARCHAR},
+            </if>
+            <if test="keyman != null" >
+                #{keyman,jdbcType=VARCHAR},
+            </if>
+            <if test="tag != null" >
+                #{tag,jdbcType=BIT},
+            </if>
+            <if test="eMail != null" >
+                #{eMail,jdbcType=VARCHAR},
+            </if>
+            <if test="region != null" >
+                #{region,jdbcType=VARCHAR},
+            </if>
+            <if test="fax != null" >
+                #{fax,jdbcType=VARCHAR},
+            </if>
+            <if test="allowminusstock != null" >
+                #{allowminusstock,jdbcType=BIT},
+            </if>
+            <if test="shutout != null" >
+                #{shutout,jdbcType=BIT},
+            </if>
+            <if test="item != null" >
+                #{item,jdbcType=VARCHAR},
+            </if>
+            <if test="discount != null" >
+                #{discount,jdbcType=DECIMAL},
+            </if>
+            <if test="qidiscount != null" >
+                #{qidiscount,jdbcType=DECIMAL},
+            </if>
+            <if test="budiscount != null" >
+                #{budiscount,jdbcType=DECIMAL},
+            </if>
+            <if test="pudiscount != null" >
+                #{pudiscount,jdbcType=DECIMAL},
+            </if>
+            <if test="maidiscount != null" >
+                #{maidiscount,jdbcType=DECIMAL},
+            </if>
+            <if test="repofficeId != null" >
+                #{repofficeId,jdbcType=VARCHAR},
+            </if>
+            <if test="channelid != null" >
+                #{channelid,jdbcType=VARCHAR},
+            </if>
+            <if test="waregroup != null" >
+                #{waregroup,jdbcType=VARCHAR},
+            </if>
+            <if test="accountcustomerId != null" >
+                #{accountcustomerId,jdbcType=VARCHAR},
+            </if>
+            <if test="insurance != null" >
+                #{insurance,jdbcType=VARCHAR},
+            </if>
+            <if test="warehouseprice != null" >
+                #{warehouseprice,jdbcType=VARCHAR},
+            </if>
+            <if test="freightcorp != null" >
+                #{freightcorp,jdbcType=VARCHAR},
+            </if>
+            <if test="iscalccost != null" >
+                #{iscalccost,jdbcType=BIT},
+            </if>
+            <if test="iscustomize != null" >
+                #{iscustomize,jdbcType=BIT},
+            </if>
+            <if test="supplyNo != null" >
+                #{supplyNo,jdbcType=VARCHAR},
+            </if>
+            <if test="id != null" >
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="companyId != null" >
+                #{companyId,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.xjt.entity.Warehouse" >
+        update warehouse
+        <set >
+            <if test="warehouseNa != null" >
+                Warehouse_Na = #{warehouseNa,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null" >
+                Address = #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="tele != null" >
+                Tele = #{tele,jdbcType=VARCHAR},
+            </if>
+            <if test="zipcode != null" >
+                Zipcode = #{zipcode,jdbcType=VARCHAR},
+            </if>
+            <if test="keyman != null" >
+                Keyman = #{keyman,jdbcType=VARCHAR},
+            </if>
+            <if test="tag != null" >
+                Tag = #{tag,jdbcType=BIT},
+            </if>
+            <if test="eMail != null" >
+                E_mail = #{eMail,jdbcType=VARCHAR},
+            </if>
+            <if test="region != null" >
+                Region = #{region,jdbcType=VARCHAR},
+            </if>
+            <if test="fax != null" >
+                Fax = #{fax,jdbcType=VARCHAR},
+            </if>
+            <if test="allowminusstock != null" >
+                AllowMinusStock = #{allowminusstock,jdbcType=BIT},
+            </if>
+            <if test="shutout != null" >
+                ShutOut = #{shutout,jdbcType=BIT},
+            </if>
+            <if test="item != null" >
+                Item = #{item,jdbcType=VARCHAR},
+            </if>
+            <if test="discount != null" >
+                Discount = #{discount,jdbcType=DECIMAL},
+            </if>
+            <if test="qidiscount != null" >
+                QiDiscount = #{qidiscount,jdbcType=DECIMAL},
+            </if>
+            <if test="budiscount != null" >
+                BuDiscount = #{budiscount,jdbcType=DECIMAL},
+            </if>
+            <if test="pudiscount != null" >
+                PuDiscount = #{pudiscount,jdbcType=DECIMAL},
+            </if>
+            <if test="maidiscount != null" >
+                MaiDiscount = #{maidiscount,jdbcType=DECIMAL},
+            </if>
+            <if test="repofficeId != null" >
+                RepOffice_ID = #{repofficeId,jdbcType=VARCHAR},
+            </if>
+            <if test="channelid != null" >
+                ChannelID = #{channelid,jdbcType=VARCHAR},
+            </if>
+            <if test="waregroup != null" >
+                WareGroup = #{waregroup,jdbcType=VARCHAR},
+            </if>
+            <if test="accountcustomerId != null" >
+                AccountCustomer_ID = #{accountcustomerId,jdbcType=VARCHAR},
+            </if>
+            <if test="insurance != null" >
+                Insurance = #{insurance,jdbcType=VARCHAR},
+            </if>
+            <if test="warehouseprice != null" >
+                WarehousePrice = #{warehouseprice,jdbcType=VARCHAR},
+            </if>
+            <if test="freightcorp != null" >
+                FreightCorp = #{freightcorp,jdbcType=VARCHAR},
+            </if>
+            <if test="iscalccost != null" >
+                IsCalcCost = #{iscalccost,jdbcType=BIT},
+            </if>
+            <if test="iscustomize != null" >
+                IsCustomize = #{iscustomize,jdbcType=BIT},
+            </if>
+            <if test="supplyNo != null" >
+                Supply_No = #{supplyNo,jdbcType=VARCHAR},
+            </if>
+            <if test="id != null" >
+                ID = #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="companyId != null" >
+                Company_ID = #{companyId,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where Warehouse_No = #{warehouseNo,jdbcType=VARCHAR}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.xjt.entity.Warehouse" >
+        update warehouse
+        set Warehouse_Na = #{warehouseNa,jdbcType=VARCHAR},
+            Address = #{address,jdbcType=VARCHAR},
+            Tele = #{tele,jdbcType=VARCHAR},
+            Zipcode = #{zipcode,jdbcType=VARCHAR},
+            Keyman = #{keyman,jdbcType=VARCHAR},
+            Tag = #{tag,jdbcType=BIT},
+            E_mail = #{eMail,jdbcType=VARCHAR},
+            Region = #{region,jdbcType=VARCHAR},
+            Fax = #{fax,jdbcType=VARCHAR},
+            AllowMinusStock = #{allowminusstock,jdbcType=BIT},
+            ShutOut = #{shutout,jdbcType=BIT},
+            Item = #{item,jdbcType=VARCHAR},
+            Discount = #{discount,jdbcType=DECIMAL},
+            QiDiscount = #{qidiscount,jdbcType=DECIMAL},
+            BuDiscount = #{budiscount,jdbcType=DECIMAL},
+            PuDiscount = #{pudiscount,jdbcType=DECIMAL},
+            MaiDiscount = #{maidiscount,jdbcType=DECIMAL},
+            RepOffice_ID = #{repofficeId,jdbcType=VARCHAR},
+            ChannelID = #{channelid,jdbcType=VARCHAR},
+            WareGroup = #{waregroup,jdbcType=VARCHAR},
+            AccountCustomer_ID = #{accountcustomerId,jdbcType=VARCHAR},
+            Insurance = #{insurance,jdbcType=VARCHAR},
+            WarehousePrice = #{warehouseprice,jdbcType=VARCHAR},
+            FreightCorp = #{freightcorp,jdbcType=VARCHAR},
+            IsCalcCost = #{iscalccost,jdbcType=BIT},
+            IsCustomize = #{iscustomize,jdbcType=BIT},
+            Supply_No = #{supplyNo,jdbcType=VARCHAR},
+            ID = #{id,jdbcType=VARCHAR},
+            Company_ID = #{companyId,jdbcType=VARCHAR}
+        where Warehouse_No = #{warehouseNo,jdbcType=VARCHAR}
+    </update>
+</mapper>

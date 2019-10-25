@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xjt.dao.master.DatapermissionDao" >
+
+    <resultMap id="BaseResultMap" type="com.xjt.entity.Datapermission" >
+        <id column="id" property="id" jdbcType="VARCHAR" />
+        <result column="groupmanager_id" property="groupmanagerId" jdbcType="VARCHAR" />
+        <result column="dictbrand_id" property="dictbrandId" jdbcType="VARCHAR" />
+        <result column="warehouse_id" property="warehouseId" jdbcType="VARCHAR" />
+        <result column="channel_id" property="channelId" jdbcType="VARCHAR" />
+        <result column="supply_id" property="supplyId" jdbcType="VARCHAR" />
+        <result column="price_range" property="priceRange" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        id, groupmanager_id, dictbrand_id, warehouse_id, channel_id, supply_id, price_range
+    </sql>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        select 
+        <include refid="Base_Column_List" />
+        from datapermission
+        where id = #{id,jdbcType=VARCHAR}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+        delete from datapermission
+        where id = #{id,jdbcType=VARCHAR}
+    </delete>
+
+    <insert id="insert" parameterType="com.xjt.entity.Datapermission" >
+        insert into datapermission (id, groupmanager_id, dictbrand_id, 
+            warehouse_id, channel_id, supply_id, 
+            price_range)
+        values (#{id,jdbcType=VARCHAR}, #{groupmanagerId,jdbcType=VARCHAR}, #{dictbrandId,jdbcType=VARCHAR}, 
+            #{warehouseId,jdbcType=VARCHAR}, #{channelId,jdbcType=VARCHAR}, #{supplyId,jdbcType=VARCHAR}, 
+            #{priceRange,jdbcType=VARCHAR})
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.xjt.entity.Datapermission" >
+        insert into datapermission
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                id,
+            </if>
+            <if test="groupmanagerId != null" >
+                groupmanager_id,
+            </if>
+            <if test="dictbrandId != null" >
+                dictbrand_id,
+            </if>
+            <if test="warehouseId != null" >
+                warehouse_id,
+            </if>
+            <if test="channelId != null" >
+                channel_id,
+            </if>
+            <if test="supplyId != null" >
+                supply_id,
+            </if>
+            <if test="priceRange != null" >
+                price_range,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="groupmanagerId != null" >
+                #{groupmanagerId,jdbcType=VARCHAR},
+            </if>
+            <if test="dictbrandId != null" >
+                #{dictbrandId,jdbcType=VARCHAR},
+            </if>
+            <if test="warehouseId != null" >
+                #{warehouseId,jdbcType=VARCHAR},
+            </if>
+            <if test="channelId != null" >
+                #{channelId,jdbcType=VARCHAR},
+            </if>
+            <if test="supplyId != null" >
+                #{supplyId,jdbcType=VARCHAR},
+            </if>
+            <if test="priceRange != null" >
+                #{priceRange,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.xjt.entity.Datapermission" >
+        update datapermission
+        <set >
+            <if test="dictbrandId != null" >
+                dictbrand_id = #{dictbrandId,jdbcType=VARCHAR},
+            </if>
+            <if test="warehouseId != null" >
+                warehouse_id = #{warehouseId,jdbcType=VARCHAR},
+            </if>
+            <if test="channelId != null" >
+                channel_id = #{channelId,jdbcType=VARCHAR},
+            </if>
+            <if test="supplyId != null" >
+                supply_id = #{supplyId,jdbcType=VARCHAR},
+            </if>
+            <if test="priceRange != null" >
+                price_range = #{priceRange,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where   groupmanager_id = #{groupmanagerId,jdbcType=VARCHAR}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.xjt.entity.Datapermission" >
+        update datapermission
+        set groupmanager_id = #{groupmanagerId,jdbcType=VARCHAR},
+            dictbrand_id = #{dictbrandId,jdbcType=VARCHAR},
+            warehouse_id = #{warehouseId,jdbcType=VARCHAR},
+            channel_id = #{channelId,jdbcType=VARCHAR},
+            supply_id = #{supplyId,jdbcType=VARCHAR},
+            price_range = #{priceRange,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+
+    <select id="queryDiffPermission" parameterType="com.xjt.dto.DatapermissionReqDto" resultType="java.lang.String">
+        select ${colName}
+          from datapermission
+            where   groupmanager_id = #{groupmanagerId,jdbcType=VARCHAR}
+    </select>
+</mapper>
