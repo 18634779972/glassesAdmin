@@ -3,11 +3,14 @@ package com.xjt.controlle;
 import com.xjt.dto.BaseResDto;
 import com.xjt.dto.CommonReqDto;
 import com.xjt.service.CommonService;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@Api(tags = "单字段表相关操作接口")
+@RequestMapping("/common")
 public class CommonController {
 
     @Autowired

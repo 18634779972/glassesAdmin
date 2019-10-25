@@ -4,8 +4,9 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 import java.util.Date;
+
 @ApiModel
-public class DictbrandReqDto {
+public class ChannelReqDto extends BaseReqDto {
 
     /**
      * 主键id(关联datapermission表)
@@ -14,10 +15,22 @@ public class DictbrandReqDto {
     private String id;
 
     /**
-     * 品牌名称
+     * 渠道名称
      */
-    @ApiModelProperty("品牌名称")
-    private String brandName;
+    @ApiModelProperty("渠道名称")
+    private String channel;
+
+    /**
+     * 渠道地址
+     */
+    @ApiModelProperty("渠道地址")
+    private String channelAddress;
+
+    /**
+     * 负责人id
+     */
+    @ApiModelProperty("负责人id")
+    private String masterId;
 
     /**
      * 是否删除，0为删除 1为未删除
@@ -29,7 +42,7 @@ public class DictbrandReqDto {
      * 创建者id
      */
     @ApiModelProperty("创建者id")
-    private String masterId;
+    private String createId;
 
     /**
      * 创建者名称
@@ -69,12 +82,28 @@ public class DictbrandReqDto {
         this.id = id == null ? null : id.trim();
     }
 
-    public String getBrandName() {
-        return brandName;
+    public String getChannel() {
+        return channel;
     }
 
-    public void setBrandName(String brandName) {
-        this.brandName = brandName == null ? null : brandName.trim();
+    public void setChannel(String channel) {
+        this.channel = channel == null ? null : channel.trim();
+    }
+
+    public String getChannelAddress() {
+        return channelAddress;
+    }
+
+    public void setChannelAddress(String channelAddress) {
+        this.channelAddress = channelAddress == null ? null : channelAddress.trim();
+    }
+
+    public String getMasterId() {
+        return masterId;
+    }
+
+    public void setMasterId(String masterId) {
+        this.masterId = masterId == null ? null : masterId.trim();
     }
 
     public Long getDeleteFlag() {
@@ -85,12 +114,12 @@ public class DictbrandReqDto {
         this.deleteFlag = deleteFlag;
     }
 
-    public String getMasterId() {
-        return masterId;
+    public String getCreateId() {
+        return createId;
     }
 
-    public void setMasterId(String masterId) {
-        this.masterId = masterId == null ? null : masterId.trim();
+    public void setCreateId(String createId) {
+        this.createId = createId == null ? null : createId.trim();
     }
 
     public String getMasterName() {

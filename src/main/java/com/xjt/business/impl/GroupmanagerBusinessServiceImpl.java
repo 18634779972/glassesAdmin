@@ -66,10 +66,10 @@ public class GroupmanagerBusinessServiceImpl implements GroupmanagerBusinessServ
         if(num != 1){
             throw new RuntimeException("删除管理组异常");
         }
-        MastergroupReqDto reqDto1 = new MastergroupReqDto();
+       /* MastergroupReqDto reqDto1 = new MastergroupReqDto();
         reqDto1.setGroupId(groupId);
         reqDto1.setDeleteFlag(deleteFlag);
-        mastergroupDao.updateDeleteFlagBatch(reqDto1);
+        mastergroupDao.updateDeleteFlagBatch(reqDto1);*/
         ActiongroupReqDto reqDto2 = new ActiongroupReqDto();
         reqDto2.setGroupId(groupId);
         reqDto2.setDeleteFlag(deleteFlag);

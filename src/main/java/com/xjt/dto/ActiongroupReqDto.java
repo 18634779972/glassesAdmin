@@ -1,43 +1,53 @@
 package com.xjt.dto;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import java.util.Date;
 import java.util.List;
-
+@ApiModel
 public class ActiongroupReqDto extends BaseReqDto {
 
     /**
      * 主键id
      */
+    @ApiModelProperty("主键id")
     private String id;
 
     /**
      * 动作名称(与action表关联)
      */
+    @ApiModelProperty("动作名称")
     private String action;
 
     /**
      * 动作所属组id(关联到mastergroup表)
      */
+    @ApiModelProperty("动作所属组id")
     private String groupId;
 
     /**
      * 创建者id
      */
+    @ApiModelProperty("创建者id")
     private String masterId;
 
     /**
      * 创建者名称
      */
+    @ApiModelProperty("创建者名称")
     private String masterName;
 
     /**
      * 创建时间
      */
+    @ApiModelProperty("创建时间")
     private Date createdate;
 
     /**
      * 是否有效 0 否 1 是
      */
+    @ApiModelProperty("是否有效 0 否 1 是")
     private Long deleteFlag;
 
     private List<String> actionIds;

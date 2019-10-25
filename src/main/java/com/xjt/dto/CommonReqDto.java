@@ -1,26 +1,33 @@
 package com.xjt.dto;
 
-import java.util.List;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
+import java.util.List;
+@ApiModel
 public class CommonReqDto extends BaseReqDto {
 
     /**
      * 对应数据库表名
      */
+    @ApiModelProperty("对应数据库表名")
     private String tableName;
 
     /**
      * 对应数据库字段名
      */
+    @ApiModelProperty("对应数据库字段名")
     private String colName;
 
     /**
      * 字段值集合
      */
+    @ApiModelProperty("字段值集合")
     private List<String> values;
     /**
      * 单个字段值
      */
+    @ApiModelProperty("单个字段值")
     private String value;
 
 

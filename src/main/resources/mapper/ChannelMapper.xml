@@ -179,4 +179,15 @@
             updatedate = #{updatedate,jdbcType=TIMESTAMP}
         where id = #{id,jdbcType=VARCHAR}
     </update>
+    <!--更新渠道有效值-->
+    <update id="updateDeleteFlag" parameterType="com.xjt.entity.Channel">
+        update channel
+          set delete_flag = #{deleteFlag,jdbcType=BIGINT}
+            where id = #{id,jdbcType=VARCHAR}
+    </update>
+    <select id="selectChannelList" resultMap="BaseResultMap">
+         select id, channel, channel_address
+           from channel
+            where delete_flag = 1
+    </select>
 </mapper>

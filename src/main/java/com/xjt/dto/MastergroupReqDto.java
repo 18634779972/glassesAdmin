@@ -1,54 +1,66 @@
 package com.xjt.dto;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import java.util.Date;
 import java.util.List;
-
+@ApiModel
 public class MastergroupReqDto extends BaseReqDto {
 
     /**
      * 主键id
      */
+    @ApiModelProperty("主键id")
     private String id;
 
     /**
      * 管理员id(关联master表)
      */
+    @ApiModelProperty("管理员id")
     private String masterId;
 
     /**
      * 管理员名称
      */
+    @ApiModelProperty("管理员名称")
     private String name;
 
     /**
      * 管理组id(关联到groupmanager表)
      */
+    @ApiModelProperty("管理组id")
     private String groupId;
 
     /**
      * 修改者id
      */
+    @ApiModelProperty("修改者id")
     private String menderId;
 
     /**
      * 修改者名称
      */
+    @ApiModelProperty("修改者名称")
     private String menderName;
 
     /**
      * 修改时间
      */
+    @ApiModelProperty("修改时间")
     private Date createdate;
 
     /**
      * 是否有效 0 否 1 有
      */
+    @ApiModelProperty("是否有效 0 否 1 有")
     private Long deleteFlag;
 
     /**
      * 多个用户id
      * @return
      */
+    @ApiModelProperty("多个用户id")
     private List<String> userIds;
 
 

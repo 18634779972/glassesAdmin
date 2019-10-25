@@ -2,6 +2,7 @@ package com.xjt.service.impl;
 
 import com.xjt.business.GroupmanagerBusinessService;
 import com.xjt.dao.master.GroupmanagerDao;
+import com.xjt.dao.master.MastergroupDao;
 import com.xjt.dto.BaseResDto;
 import com.xjt.dto.GroupmanagerReqDto;
 import com.xjt.entity.Groupmanager;
@@ -22,6 +23,8 @@ public class GroupmanagerServiceImpl implements GroupmanagerService {
     private GroupmanagerBusinessService businessService;
     @Resource
     private GroupmanagerDao groupmanagerDao;
+    @Resource
+    private MastergroupDao mastergroupDao;
 
     private Logger logger = LoggerFactory.getLogger(GroupmanagerServiceImpl.class);
 
@@ -66,6 +69,12 @@ public class GroupmanagerServiceImpl implements GroupmanagerService {
             return baseResDto;
         }
         try{
+            int num = mastergroupDao.isHaveMaster(groupId);
+            if(num>0){
+                baseResDto.setResultCode(ResultCode.RESULT_CODE_EXCEPTION.getCode());
+                baseResDto.setResultMessage("该组内还有成员，不允许删除");
+                return baseResDto;
+            }
             businessService.deleteGroupManager(reqDto);
         }catch (Exception e){
             baseResDto.setResultMessage("It has an exception to delete the group");

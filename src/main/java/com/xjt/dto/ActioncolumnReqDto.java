@@ -15,11 +15,13 @@ public class ActioncolumnReqDto extends BaseReqDto {
     /**
      * 动作名称
      */
+    @ApiModelProperty("动作名称")
     private String actionColumnName;
 
     /**
      * 是否有效 0  否  1 有
      */
+    @ApiModelProperty("是否有效 0  否  1 有")
     private Long deleteFlag;
 
     public String getActionColumnId() {

@@ -36,6 +36,13 @@ public interface MastergroupDao {
      */
     int updateDeleteFlagBatch(MastergroupReqDto reqDto);
 
+    /**
+     * 判断组里是否还有成员
+     * @param groupId
+     * @return
+     */
+    int isHaveMaster(String groupId);
+
 
 
 }

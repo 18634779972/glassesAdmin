@@ -1,40 +1,51 @@
 package com.xjt.dto;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
+@ApiModel
 public class DatapermissionReqDto extends BaseReqDto {
 
     /**
      * 主键id
      */
+    @ApiModelProperty("主键id")
     private String id;
 
     /**
      * 管理组id(关联groupmanager)
      */
+    @ApiModelProperty("管理组id")
     private String groupmanagerId;
 
     /**
      * 品牌id(关联dictbrand)
      */
+    @ApiModelProperty("品牌id")
     private String dictbrandId;
 
     /**
      * 仓库id(关联warehouse)
      */
+    @ApiModelProperty("仓库id")
     private String warehouseId;
 
     /**
      * 渠道id(关联channel)
      */
+    @ApiModelProperty("渠道id")
     private String channelId;
 
     /**
      * 供应商id(关联supply表)
      */
+    @ApiModelProperty("供应商id")
     private String supplyId;
 
     /**
      * 价格(0是进货价,1是零售价,2是附加价,3是批发价,4是加盟价)
      */
+    @ApiModelProperty("价格(0是进货价,1是零售价,2是附加价,3是批发价,4是加盟价)")
     private String priceRange;
 
     /**
@@ -45,6 +56,7 @@ public class DatapermissionReqDto extends BaseReqDto {
     /**
      * 请求类别
      */
+
     private Integer requestType;
 
     public String getId() {

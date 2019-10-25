@@ -1,42 +1,52 @@
 package com.xjt.dto;
 
-import java.util.Date;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
+import java.util.Date;
+@ApiModel
 public class GroupmanagerReqDto extends BaseReqDto {
 
     /**
      * 主键id
      */
+    @ApiModelProperty("主键id")
     private String groupId;
 
     /**
      * 管理组名称
      */
+    @ApiModelProperty("管理组名称")
     private String groupName;
 
     /**
      * 管理组信息
      */
+    @ApiModelProperty("管理组信息")
     private String groupInfo;
 
     /**
      * 创建者id
      */
+    @ApiModelProperty("创建者id")
     private String masterId;
 
     /**
      * 创建者名称
      */
+    @ApiModelProperty("创建者名称")
     private String masterName;
 
     /**
      * 组创建时间
      */
+    @ApiModelProperty("组创建时间")
     private Date createdate;
 
     /**
      * 是否有效 0 否 1 是
      */
+    @ApiModelProperty("是否有效 0 否 1 是")
     private Long deleteFlag;
 
     public String getGroupId() {

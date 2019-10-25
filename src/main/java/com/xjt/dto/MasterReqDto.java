@@ -1,91 +1,113 @@
 package com.xjt.dto;
 
-import java.util.Date;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
+import java.util.Date;
+@ApiModel
 public class MasterReqDto extends BaseReqDto {
     /**
      * 主键id
      */
+    @ApiModelProperty("主键id")
     private String id;
 
     /**
      * 管理员名称
      */
+    @ApiModelProperty("管理员名称")
     private String name;
 
     /**
      * 管理员密码
      */
+    @ApiModelProperty("管理员密码")
     private String password;
 
     /**
      * 真实姓名
      */
+    @ApiModelProperty("真实姓名")
     private String trueName;
 
     /**
      * 性别(0是男，1是女)
      */
+    @ApiModelProperty("性别(0是男，1是女)")
     private Long sex;
 
     /**
      * 生日
      */
+    @ApiModelProperty("生日:yyyy-MM-dd")
+    private String birth;
+
     private Date birthday;
 
     /**
      * 所属部门
      */
+    @ApiModelProperty("所属部门")
     private String dept;
 
     /**
      * 职务
      */
+    @ApiModelProperty("职务")
     private String position;
 
     /**
      * 职务说明
      */
+    @ApiModelProperty("职务说明")
     private String positionDesc;
 
     /**
      * 办公室电话
      */
+    @ApiModelProperty("办公室电话")
     private Long officePhone;
 
     /**
      * 手机
      */
+    @ApiModelProperty("手机")
     private Long mobile;
 
     /**
      * 家庭电话
      */
+    @ApiModelProperty("家庭电话")
     private Long homePhone;
 
     /**
      * 电子邮件
      */
+    @ApiModelProperty("电子邮件")
     private String email;
 
     /**
      * 创建者id
      */
+    @ApiModelProperty("创建者id")
     private String masterId;
 
     /**
      * 创建者名称
      */
+    @ApiModelProperty("创建者名称")
     private String masterName;
 
     /**
      * 修改时间
      */
+    @ApiModelProperty("修改时间")
     private Date createdate;
 
     /**
      * 是否有效 0 否 1 有
      */
+    @ApiModelProperty("是否有效 0 否 1 有")
     private Long deleteFlag;
 
     public String getId() {
@@ -126,6 +148,14 @@ public class MasterReqDto extends BaseReqDto {
 
     public void setSex(Long sex) {
         this.sex = sex;
+    }
+
+    public String getBirth() {
+        return birth;
+    }
+
+    public void setBirth(String birth) {
+        this.birth = birth;
     }
 
     public Date getBirthday() {

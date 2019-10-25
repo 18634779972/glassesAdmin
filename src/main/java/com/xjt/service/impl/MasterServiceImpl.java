@@ -16,6 +16,8 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -45,6 +47,12 @@ public class MasterServiceImpl implements MasterService {
             return baseResDto;
         }
         try{
+            String birth = reqDto.getBirth();
+            if(!STRUtils.isEmpty(birth)){
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                Date birthday = sdf.parse(birth);
+                reqDto.setBirthday(birthday);
+            }
             businessService.insertMaster(reqDto);
         }catch (Exception e){
             baseResDto.setResultCode(ResultCode.RESULT_CODE_EXCEPTION.getCode());

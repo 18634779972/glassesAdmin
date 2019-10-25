@@ -158,4 +158,10 @@
           </if>
 
     </update>
+    <!--判断组里是否还有成员-->
+    <select id="isHaveMaster" parameterType="java.lang.String" resultType="java.lang.Integer">
+        select count(*)
+          from mastergroup
+            where group_id = #{groupId,jdbcType=VARCHAR} and delete_flag = 1
+    </select>
 </mapper>
