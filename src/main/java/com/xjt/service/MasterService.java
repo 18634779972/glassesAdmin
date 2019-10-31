@@ -30,4 +30,9 @@ public interface MasterService {
      */
     BaseResDto queryMasterInfo(String id);
 
+    /**
+     * 处理用户登录
+     */
+    BaseResDto userLoginResolve(MasterReqDto reqDto);
+
 }

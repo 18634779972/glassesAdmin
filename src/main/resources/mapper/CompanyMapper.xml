@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xjt.dao.master.CompanyDao" >
+
+    <resultMap id="BaseResultMap" type="com.xjt.entity.Company" >
+        <id column="Company_ID" property="companyId" jdbcType="VARCHAR" />
+        <result column="Company_Abv" property="companyAbv" jdbcType="VARCHAR" />
+        <result column="Company_Na" property="companyNa" jdbcType="VARCHAR" />
+        <result column="Address" property="address" jdbcType="VARCHAR" />
+        <result column="Tel" property="tel" jdbcType="VARCHAR" />
+        <result column="Fax" property="fax" jdbcType="VARCHAR" />
+        <result column="Keyman" property="keyman" jdbcType="VARCHAR" />
+        <result column="DefaultWarehouse" property="defaultwarehouse" jdbcType="VARCHAR" />
+        <result column="ID" property="id" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        Company_ID, Company_Abv, Company_Na, Address, Tel, Fax, Keyman, DefaultWarehouse, 
+        ID
+    </sql>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        select 
+        <include refid="Base_Column_List" />
+        from company
+        where Company_ID = #{companyId,jdbcType=VARCHAR}
+    </select>
+
+    <select id="queryCompanyList" resultMap="BaseResultMap">
+        select  Company_ID, Company_Abv, Company_Na, Address, Tel,  Keyman
+         from company
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+        delete from company
+        where Company_ID = #{companyId,jdbcType=VARCHAR}
+    </delete>
+
+    <insert id="insert" parameterType="com.xjt.entity.Company" >
+        insert into company (Company_ID, Company_Abv, Company_Na, 
+            Address, Tel, Fax, 
+            Keyman, DefaultWarehouse, ID
+            )
+        values (#{companyId,jdbcType=VARCHAR}, #{companyAbv,jdbcType=VARCHAR}, #{companyNa,jdbcType=VARCHAR}, 
+            #{address,jdbcType=VARCHAR}, #{tel,jdbcType=VARCHAR}, #{fax,jdbcType=VARCHAR}, 
+            #{keyman,jdbcType=VARCHAR}, #{defaultwarehouse,jdbcType=VARCHAR}, #{id,jdbcType=VARCHAR}
+            )
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.xjt.entity.Company" >
+        insert into company
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="companyId != null" >
+                Company_ID,
+            </if>
+            <if test="companyAbv != null" >
+                Company_Abv,
+            </if>
+            <if test="companyNa != null" >
+                Company_Na,
+            </if>
+            <if test="address != null" >
+                Address,
+            </if>
+            <if test="tel != null" >
+                Tel,
+            </if>
+            <if test="fax != null" >
+                Fax,
+            </if>
+            <if test="keyman != null" >
+                Keyman,
+            </if>
+            <if test="defaultwarehouse != null" >
+                DefaultWarehouse,
+            </if>
+            <if test="id != null" >
+                ID,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="companyId != null" >
+                #{companyId,jdbcType=VARCHAR},
+            </if>
+            <if test="companyAbv != null" >
+                #{companyAbv,jdbcType=VARCHAR},
+            </if>
+            <if test="companyNa != null" >
+                #{companyNa,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null" >
+                #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="tel != null" >
+                #{tel,jdbcType=VARCHAR},
+            </if>
+            <if test="fax != null" >
+                #{fax,jdbcType=VARCHAR},
+            </if>
+            <if test="keyman != null" >
+                #{keyman,jdbcType=VARCHAR},
+            </if>
+            <if test="defaultwarehouse != null" >
+                #{defaultwarehouse,jdbcType=VARCHAR},
+            </if>
+            <if test="id != null" >
+                #{id,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.xjt.entity.Company" >
+        update company
+        <set >
+            <if test="companyAbv != null" >
+                Company_Abv = #{companyAbv,jdbcType=VARCHAR},
+            </if>
+            <if test="companyNa != null" >
+                Company_Na = #{companyNa,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null" >
+                Address = #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="tel != null" >
+                Tel = #{tel,jdbcType=VARCHAR},
+            </if>
+            <if test="fax != null" >
+                Fax = #{fax,jdbcType=VARCHAR},
+            </if>
+            <if test="keyman != null" >
+                Keyman = #{keyman,jdbcType=VARCHAR},
+            </if>
+            <if test="defaultwarehouse != null" >
+                DefaultWarehouse = #{defaultwarehouse,jdbcType=VARCHAR},
+            </if>
+            <if test="id != null" >
+                ID = #{id,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where Company_ID = #{companyId,jdbcType=VARCHAR}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.xjt.entity.Company" >
+        update company
+        set Company_Abv = #{companyAbv,jdbcType=VARCHAR},
+            Company_Na = #{companyNa,jdbcType=VARCHAR},
+            Address = #{address,jdbcType=VARCHAR},
+            Tel = #{tel,jdbcType=VARCHAR},
+            Fax = #{fax,jdbcType=VARCHAR},
+            Keyman = #{keyman,jdbcType=VARCHAR},
+            DefaultWarehouse = #{defaultwarehouse,jdbcType=VARCHAR},
+            ID = #{id,jdbcType=VARCHAR}
+        where Company_ID = #{companyId,jdbcType=VARCHAR}
+    </update>
+</mapper>

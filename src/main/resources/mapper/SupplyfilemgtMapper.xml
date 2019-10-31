@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xjt.dao.master.SupplyfilemgtDao" >
+
+    <resultMap id="BaseResultMap" type="com.xjt.entity.Supplyfilemgt" >
+        <id column="ID" property="id" jdbcType="INTEGER" />
+        <result column="FileName" property="filename" jdbcType="VARCHAR" />
+        <result column="FilePath" property="filepath" jdbcType="VARCHAR" />
+        <result column="PicturePath" property="picturepath" jdbcType="VARCHAR" />
+        <result column="UploadDate" property="uploaddate" jdbcType="TIMESTAMP" />
+        <result column="EffectiveDate" property="effectivedate" jdbcType="TIMESTAMP" />
+        <result column="ExpirationDate" property="expirationdate" jdbcType="TIMESTAMP" />
+        <result column="FileType" property="filetype" jdbcType="VARCHAR" />
+        <result column="DocDate" property="docdate" jdbcType="TIMESTAMP" />
+        <result column="UpdateTimeStamp" property="updatetimestamp" jdbcType="TIMESTAMP" />
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        ID, FileName, FilePath, PicturePath, UploadDate, EffectiveDate, ExpirationDate, FileType, 
+        DocDate, UpdateTimeStamp
+    </sql>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+        select 
+        <include refid="Base_Column_List" />
+        from supplyfilemgt
+        where ID = #{id,jdbcType=INTEGER}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+        delete from supplyfilemgt
+        where ID = #{id,jdbcType=INTEGER}
+    </delete>
+
+    <insert id="insert" parameterType="com.xjt.entity.Supplyfilemgt" >
+        insert into supplyfilemgt (ID, FileName, FilePath, 
+            PicturePath, UploadDate, EffectiveDate, 
+            ExpirationDate, FileType, DocDate, 
+            UpdateTimeStamp)
+        values (#{id,jdbcType=INTEGER}, #{filename,jdbcType=VARCHAR}, #{filepath,jdbcType=VARCHAR}, 
+            #{picturepath,jdbcType=VARCHAR}, #{uploaddate,jdbcType=TIMESTAMP}, #{effectivedate,jdbcType=TIMESTAMP}, 
+            #{expirationdate,jdbcType=TIMESTAMP}, #{filetype,jdbcType=VARCHAR}, #{docdate,jdbcType=TIMESTAMP}, 
+            #{updatetimestamp,jdbcType=TIMESTAMP})
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.xjt.entity.Supplyfilemgt" >
+        insert into supplyfilemgt
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                ID,
+            </if>
+            <if test="filename != null" >
+                FileName,
+            </if>
+            <if test="filepath != null" >
+                FilePath,
+            </if>
+            <if test="picturepath != null" >
+                PicturePath,
+            </if>
+            <if test="uploaddate != null" >
+                UploadDate,
+            </if>
+            <if test="effectivedate != null" >
+                EffectiveDate,
+            </if>
+            <if test="expirationdate != null" >
+                ExpirationDate,
+            </if>
+            <if test="filetype != null" >
+                FileType,
+            </if>
+            <if test="docdate != null" >
+                DocDate,
+            </if>
+            <if test="updatetimestamp != null" >
+                UpdateTimeStamp,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="filename != null" >
+                #{filename,jdbcType=VARCHAR},
+            </if>
+            <if test="filepath != null" >
+                #{filepath,jdbcType=VARCHAR},
+            </if>
+            <if test="picturepath != null" >
+                #{picturepath,jdbcType=VARCHAR},
+            </if>
+            <if test="uploaddate != null" >
+                #{uploaddate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="effectivedate != null" >
+                #{effectivedate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="expirationdate != null" >
+                #{expirationdate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="filetype != null" >
+                #{filetype,jdbcType=VARCHAR},
+            </if>
+            <if test="docdate != null" >
+                #{docdate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updatetimestamp != null" >
+                #{updatetimestamp,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.xjt.entity.Supplyfilemgt" >
+        update supplyfilemgt
+        <set >
+            <if test="filename != null" >
+                FileName = #{filename,jdbcType=VARCHAR},
+            </if>
+            <if test="filepath != null" >
+                FilePath = #{filepath,jdbcType=VARCHAR},
+            </if>
+            <if test="picturepath != null" >
+                PicturePath = #{picturepath,jdbcType=VARCHAR},
+            </if>
+            <if test="uploaddate != null" >
+                UploadDate = #{uploaddate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="effectivedate != null" >
+                EffectiveDate = #{effectivedate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="expirationdate != null" >
+                ExpirationDate = #{expirationdate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="filetype != null" >
+                FileType = #{filetype,jdbcType=VARCHAR},
+            </if>
+            <if test="docdate != null" >
+                DocDate = #{docdate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updatetimestamp != null" >
+                UpdateTimeStamp = #{updatetimestamp,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where ID = #{id,jdbcType=INTEGER}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.xjt.entity.Supplyfilemgt" >
+        update supplyfilemgt
+        set FileName = #{filename,jdbcType=VARCHAR},
+            FilePath = #{filepath,jdbcType=VARCHAR},
+            PicturePath = #{picturepath,jdbcType=VARCHAR},
+            UploadDate = #{uploaddate,jdbcType=TIMESTAMP},
+            EffectiveDate = #{effectivedate,jdbcType=TIMESTAMP},
+            ExpirationDate = #{expirationdate,jdbcType=TIMESTAMP},
+            FileType = #{filetype,jdbcType=VARCHAR},
+            DocDate = #{docdate,jdbcType=TIMESTAMP},
+            UpdateTimeStamp = #{updatetimestamp,jdbcType=TIMESTAMP}
+        where ID = #{id,jdbcType=INTEGER}
+    </update>
+</mapper>

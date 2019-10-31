@@ -7,6 +7,8 @@ import cn.afterturn.easypoi.excel.entity.ImportParams;
 import cn.afterturn.easypoi.excel.entity.enmus.ExcelType;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
@@ -24,7 +26,10 @@ import java.util.NoSuchElementException;
  * @author dengzl
  * @date 2019/06/10
  */
+
 public class FileUtil {
+
+
 
     public static void exportExcel(List<?> list, String title, String sheetName, Class<?> pojoClass, String fileName, boolean isCreateHeader, HttpServletResponse response) throws RuntimeException {
         ExportParams exportParams = new ExportParams(title, sheetName);
@@ -109,5 +114,76 @@ public class FileUtil {
         }
         return list;
     }
+
+    /**
+     * 实现单文件上传
+     */
+    public static  boolean uploadFile(MultipartFile file,String saveFilePath){
+        boolean flag = true;
+        if(file.isEmpty()){
+           flag = false;
+           return flag;
+        }
+        String fileName = file.getOriginalFilename();
+        int size = (int) file.getSize();
+        System.out.println(fileName + "-->" + size);
+        File dest = new File(saveFilePath + "/" + fileName);
+        if(!dest.getParentFile().exists()){ //判断文件父目录是否存在
+            dest.getParentFile().mkdir();
+        }
+        try {
+            file.transferTo(dest); //保存文件
+          flag = true;
+        } catch (IllegalStateException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            flag = false;
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+           flag = false;
+        }
+        return flag;
+    }
+
+    /**
+     * 批量上传图片
+     * @param files
+     * @param savePath
+     * @return
+     */
+    public static int  uploadFileBatch(List<MultipartFile> files,String savePath){
+        if(files.isEmpty()){
+            return 0;
+        }
+        int i = 0;
+        for(MultipartFile file:files){
+            boolean flag = uploadFile(file,savePath);
+            if(flag){
+                i++;
+            }else{
+
+            }
+        }
+        return i;
+    }
+
+    /**
+     * 删除文件
+     * @param filePath
+     * @return
+     */
+    public static boolean deleteFile(String filePath){
+        boolean flag = false;
+        File file = new File(filePath);
+        if (file.exists()) {
+            if (file.delete()) {
+                flag = true;
+            }
+        }
+        return flag;
+
+    }
+
 }
 

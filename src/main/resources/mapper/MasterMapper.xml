@@ -33,6 +33,10 @@
         from master
         where id = #{id,jdbcType=VARCHAR}
     </select>
+    <select id="selectByNP" resultMap="BaseResultMap">
+        select id, `name` from master
+          where `name` = #{userName} and password = #{password} and delete_flag = 1
+    </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
         delete from master

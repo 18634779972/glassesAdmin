@@ -6,7 +6,7 @@ import io.swagger.annotations.ApiModelProperty;
 import java.math.BigDecimal;
 
 @ApiModel
-public class WarehouseReqDto {
+public class WarehouseReqDto extends BaseReqDto {
 
     /**
      * 仓库编号

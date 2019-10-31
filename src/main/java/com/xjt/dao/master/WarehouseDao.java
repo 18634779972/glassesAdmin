@@ -42,4 +42,10 @@ public interface WarehouseDao {
      */
     List<Warehouse> queryHouseList(@Param("ids") List<String> ids);
 
+    /**
+     * 查看仓库列表
+     * @return
+     */
+    List<Warehouse> queryWarehouseList();
+
 }

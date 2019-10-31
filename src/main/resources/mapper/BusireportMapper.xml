@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xjt.dao.master.BusireportDao" >
+
+    <resultMap id="BaseResultMap" type="com.xjt.entity.Busireport" >
+        <id column="BRID" property="brid" jdbcType="VARCHAR" />
+        <result column="PermitNo" property="permitno" jdbcType="VARCHAR" />
+        <result column="EnterpriseName" property="enterprisename" jdbcType="VARCHAR" />
+        <result column="Legal" property="legal" jdbcType="VARCHAR" />
+        <result column="KeyMan" property="keyman" jdbcType="VARCHAR" />
+        <result column="Home" property="home" jdbcType="VARCHAR" />
+        <result column="Premises" property="premises" jdbcType="VARCHAR" />
+        <result column="BusiType" property="busitype" jdbcType="VARCHAR" />
+        <result column="BusiScope" property="busiscope" jdbcType="LONGVARCHAR" />
+        <result column="WarehouseAddr" property="warehouseaddr" jdbcType="VARCHAR" />
+        <result column="IssueDepartment" property="issuedepartment" jdbcType="VARCHAR" />
+        <result column="IssueDate" property="issuedate" jdbcType="TIMESTAMP" />
+        <result column="ExpiryDate" property="expirydate" jdbcType="TIMESTAMP" />
+        <result column="ReportNo" property="reportno" jdbcType="VARCHAR" />
+        <result column="ReportDate" property="reportdate" jdbcType="TIMESTAMP" />
+        <result column="ReportDepartment" property="reportdepartment" jdbcType="VARCHAR" />
+        <result column="Supply_No" property="supplyNo" jdbcType="VARCHAR" />
+        <result column="Column_Ex1" property="columnEx1" jdbcType="VARCHAR" />
+        <result column="Column_Ex2" property="columnEx2" jdbcType="VARCHAR" />
+        <result column="Column_Ex3" property="columnEx3" jdbcType="VARCHAR" />
+        <result column="DocDate" property="docdate" jdbcType="TIMESTAMP" />
+        <result column="UpdateTimeStamp" property="updatetimestamp" jdbcType="TIMESTAMP" />
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        BRID, PermitNo, EnterpriseName, Legal, KeyMan, Home, Premises, BusiType, BusiScope, 
+        WarehouseAddr, IssueDepartment, IssueDate, ExpiryDate, ReportNo, ReportDate, ReportDepartment, 
+        Supply_No, Column_Ex1, Column_Ex2, Column_Ex3, DocDate, UpdateTimeStamp
+    </sql>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        select 
+        <include refid="Base_Column_List" />
+        from busireport
+        where BRID = #{brid,jdbcType=VARCHAR}
+    </select>
+
+    <select id="queryBusiInfo" resultMap="BaseResultMap" parameterType="com.xjt.entity.Busireport">
+        select  <include refid="Base_Column_List" />
+          from busireport
+            <where>
+                <if test="permitno != null">
+                    and PermitNo = #{permitno}
+                </if>
+                <if test="enterprisename != null">
+                    and EnterpriseName like concat ('%',#{enterprisename},'%')
+                </if>
+                <if test="legal != null">
+                    and Legal like concat('%',#{legal},'%')
+                </if>
+            </where>
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+        delete from busireport
+        where BRID = #{brid,jdbcType=VARCHAR}
+    </delete>
+
+    <insert id="insert" parameterType="com.xjt.entity.Busireport" >
+        insert into busireport (BRID, PermitNo, EnterpriseName, 
+            Legal, KeyMan, Home, 
+            Premises, BusiType, BusiScope, 
+            WarehouseAddr, IssueDepartment, IssueDate, 
+            ExpiryDate, ReportNo, ReportDate, 
+            ReportDepartment, Supply_No, Column_Ex1, 
+            Column_Ex2, Column_Ex3, DocDate, 
+            UpdateTimeStamp)
+        values (#{brid,jdbcType=VARCHAR}, #{permitno,jdbcType=VARCHAR}, #{enterprisename,jdbcType=VARCHAR}, 
+            #{legal,jdbcType=VARCHAR}, #{keyman,jdbcType=VARCHAR}, #{home,jdbcType=VARCHAR}, 
+            #{premises,jdbcType=VARCHAR}, #{busitype,jdbcType=VARCHAR}, #{busiscope,jdbcType=LONGVARCHAR}, 
+            #{warehouseaddr,jdbcType=VARCHAR}, #{issuedepartment,jdbcType=VARCHAR}, #{issuedate,jdbcType=TIMESTAMP}, 
+            #{expirydate,jdbcType=TIMESTAMP}, #{reportno,jdbcType=VARCHAR}, #{reportdate,jdbcType=TIMESTAMP}, 
+            #{reportdepartment,jdbcType=VARCHAR}, #{supplyNo,jdbcType=VARCHAR}, #{columnEx1,jdbcType=VARCHAR}, 
+            #{columnEx2,jdbcType=VARCHAR}, #{columnEx3,jdbcType=VARCHAR}, #{docdate,jdbcType=TIMESTAMP}, 
+            #{updatetimestamp,jdbcType=TIMESTAMP})
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.xjt.entity.Busireport" >
+        insert into busireport
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="brid != null" >
+                BRID,
+            </if>
+            <if test="permitno != null" >
+                PermitNo,
+            </if>
+            <if test="enterprisename != null" >
+                EnterpriseName,
+            </if>
+            <if test="legal != null" >
+                Legal,
+            </if>
+            <if test="keyman != null" >
+                KeyMan,
+            </if>
+            <if test="home != null" >
+                Home,
+            </if>
+            <if test="premises != null" >
+                Premises,
+            </if>
+            <if test="busitype != null" >
+                BusiType,
+            </if>
+            <if test="busiscope != null" >
+                BusiScope,
+            </if>
+            <if test="warehouseaddr != null" >
+                WarehouseAddr,
+            </if>
+            <if test="issuedepartment != null" >
+                IssueDepartment,
+            </if>
+            <if test="issuedate != null" >
+                IssueDate,
+            </if>
+            <if test="expirydate != null" >
+                ExpiryDate,
+            </if>
+            <if test="reportno != null" >
+                ReportNo,
+            </if>
+            <if test="reportdate != null" >
+                ReportDate,
+            </if>
+            <if test="reportdepartment != null" >
+                ReportDepartment,
+            </if>
+            <if test="supplyNo != null" >
+                Supply_No,
+            </if>
+            <if test="columnEx1 != null" >
+                Column_Ex1,
+            </if>
+            <if test="columnEx2 != null" >
+                Column_Ex2,
+            </if>
+            <if test="columnEx3 != null" >
+                Column_Ex3,
+            </if>
+            <if test="docdate != null" >
+                DocDate,
+            </if>
+            <if test="updatetimestamp != null" >
+                UpdateTimeStamp,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="brid != null" >
+                #{brid,jdbcType=VARCHAR},
+            </if>
+            <if test="permitno != null" >
+                #{permitno,jdbcType=VARCHAR},
+            </if>
+            <if test="enterprisename != null" >
+                #{enterprisename,jdbcType=VARCHAR},
+            </if>
+            <if test="legal != null" >
+                #{legal,jdbcType=VARCHAR},
+            </if>
+            <if test="keyman != null" >
+                #{keyman,jdbcType=VARCHAR},
+            </if>
+            <if test="home != null" >
+                #{home,jdbcType=VARCHAR},
+            </if>
+            <if test="premises != null" >
+                #{premises,jdbcType=VARCHAR},
+            </if>
+            <if test="busitype != null" >
+                #{busitype,jdbcType=VARCHAR},
+            </if>
+            <if test="busiscope != null" >
+                #{busiscope,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="warehouseaddr != null" >
+                #{warehouseaddr,jdbcType=VARCHAR},
+            </if>
+            <if test="issuedepartment != null" >
+                #{issuedepartment,jdbcType=VARCHAR},
+            </if>
+            <if test="issuedate != null" >
+                #{issuedate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="expirydate != null" >
+                #{expirydate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="reportno != null" >
+                #{reportno,jdbcType=VARCHAR},
+            </if>
+            <if test="reportdate != null" >
+                #{reportdate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="reportdepartment != null" >
+                #{reportdepartment,jdbcType=VARCHAR},
+            </if>
+            <if test="supplyNo != null" >
+                #{supplyNo,jdbcType=VARCHAR},
+            </if>
+            <if test="columnEx1 != null" >
+                #{columnEx1,jdbcType=VARCHAR},
+            </if>
+            <if test="columnEx2 != null" >
+                #{columnEx2,jdbcType=VARCHAR},
+            </if>
+            <if test="columnEx3 != null" >
+                #{columnEx3,jdbcType=VARCHAR},
+            </if>
+            <if test="docdate != null" >
+                #{docdate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updatetimestamp != null" >
+                #{updatetimestamp,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.xjt.entity.Busireport" >
+        update busireport
+        <set >
+            <if test="permitno != null" >
+                PermitNo = #{permitno,jdbcType=VARCHAR},
+            </if>
+            <if test="enterprisename != null" >
+                EnterpriseName = #{enterprisename,jdbcType=VARCHAR},
+            </if>
+            <if test="legal != null" >
+                Legal = #{legal,jdbcType=VARCHAR},
+            </if>
+            <if test="keyman != null" >
+                KeyMan = #{keyman,jdbcType=VARCHAR},
+            </if>
+            <if test="home != null" >
+                Home = #{home,jdbcType=VARCHAR},
+            </if>
+            <if test="premises != null" >
+                Premises = #{premises,jdbcType=VARCHAR},
+            </if>
+            <if test="busitype != null" >
+                BusiType = #{busitype,jdbcType=VARCHAR},
+            </if>
+            <if test="busiscope != null" >
+                BusiScope = #{busiscope,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="warehouseaddr != null" >
+                WarehouseAddr = #{warehouseaddr,jdbcType=VARCHAR},
+            </if>
+            <if test="issuedepartment != null" >
+                IssueDepartment = #{issuedepartment,jdbcType=VARCHAR},
+            </if>
+            <if test="issuedate != null" >
+                IssueDate = #{issuedate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="expirydate != null" >
+                ExpiryDate = #{expirydate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="reportno != null" >
+                ReportNo = #{reportno,jdbcType=VARCHAR},
+            </if>
+            <if test="reportdate != null" >
+                ReportDate = #{reportdate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="reportdepartment != null" >
+                ReportDepartment = #{reportdepartment,jdbcType=VARCHAR},
+            </if>
+            <if test="supplyNo != null" >
+                Supply_No = #{supplyNo,jdbcType=VARCHAR},
+            </if>
+            <if test="columnEx1 != null" >
+                Column_Ex1 = #{columnEx1,jdbcType=VARCHAR},
+            </if>
+            <if test="columnEx2 != null" >
+                Column_Ex2 = #{columnEx2,jdbcType=VARCHAR},
+            </if>
+            <if test="columnEx3 != null" >
+                Column_Ex3 = #{columnEx3,jdbcType=VARCHAR},
+            </if>
+            <if test="docdate != null" >
+                DocDate = #{docdate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updatetimestamp != null" >
+                UpdateTimeStamp = #{updatetimestamp,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where BRID = #{brid,jdbcType=VARCHAR}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.xjt.entity.Busireport" >
+        update busireport
+        set PermitNo = #{permitno,jdbcType=VARCHAR},
+            EnterpriseName = #{enterprisename,jdbcType=VARCHAR},
+            Legal = #{legal,jdbcType=VARCHAR},
+            KeyMan = #{keyman,jdbcType=VARCHAR},
+            Home = #{home,jdbcType=VARCHAR},
+            Premises = #{premises,jdbcType=VARCHAR},
+            BusiType = #{busitype,jdbcType=VARCHAR},
+            BusiScope = #{busiscope,jdbcType=LONGVARCHAR},
+            WarehouseAddr = #{warehouseaddr,jdbcType=VARCHAR},
+            IssueDepartment = #{issuedepartment,jdbcType=VARCHAR},
+            IssueDate = #{issuedate,jdbcType=TIMESTAMP},
+            ExpiryDate = #{expirydate,jdbcType=TIMESTAMP},
+            ReportNo = #{reportno,jdbcType=VARCHAR},
+            ReportDate = #{reportdate,jdbcType=TIMESTAMP},
+            ReportDepartment = #{reportdepartment,jdbcType=VARCHAR},
+            Supply_No = #{supplyNo,jdbcType=VARCHAR},
+            Column_Ex1 = #{columnEx1,jdbcType=VARCHAR},
+            Column_Ex2 = #{columnEx2,jdbcType=VARCHAR},
+            Column_Ex3 = #{columnEx3,jdbcType=VARCHAR},
+            DocDate = #{docdate,jdbcType=TIMESTAMP},
+            UpdateTimeStamp = #{updatetimestamp,jdbcType=TIMESTAMP}
+        where BRID = #{brid,jdbcType=VARCHAR}
+    </update>
+</mapper>

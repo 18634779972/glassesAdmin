@@ -68,6 +68,12 @@
           </foreach>
 
     </select>
+    <select id="querySupplyDataList" resultMap="BaseResultMap">
+          select  Supply_No, Supply_Abv, Supply_Na, RegisterNumber, RegisterOrg, BusinessArea, RegisterDate,
+        ExpiryDate, RegisterMomey, Keyman, Fax, Tele1, Tele2, RegisterAddress, Address, Region,
+        E_mail, Zipcode
+          from supply
+    </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
         delete from supply

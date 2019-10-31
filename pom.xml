@@ -33,6 +33,11 @@
 			</exclusion>
 		</exclusions>
   	</dependency>
+	  <!--AOP切面-->
+	  <dependency>
+		  <groupId>org.springframework.boot</groupId>
+		  <artifactId>spring-boot-starter-aop</artifactId>
+	  </dependency>
 	  <!--swagger 在线文档-->
 	  <dependency>
 		  <groupId>io.springfox</groupId>

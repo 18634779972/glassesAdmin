@@ -4,6 +4,7 @@ import com.xjt.business.Dictcategory2BusinessService;
 import com.xjt.dao.master.Dictcategory2Dao;
 import com.xjt.dao.other.Dictcategory2SqlDao;
 import com.xjt.dto.BaseResDto;
+import com.xjt.dto.Dictcategory1ReqDto;
 import com.xjt.entity.Dictcategory2;
 import com.xjt.enums.ResultCode;
 import com.xjt.service.Dictcategory2Service;
@@ -27,21 +28,37 @@ public class Dictcategory2ServiceImpl implements Dictcategory2Service {
     Logger logger = LoggerFactory.getLogger(Dictcategory2ServiceImpl.class);
 
     /**
-     * 批量添加分类
-     * @param records
-     * @param db
+     * 一级分类下批量添加二级分类
+     * @param
+     * @param
      * @return
      */
     @Override
-    public BaseResDto insertBatch(List<Dictcategory2> records, Integer db) {
+    public BaseResDto insertBatch(Dictcategory1ReqDto reqDto) {
         BaseResDto baseResDto = new BaseResDto();
-        if(records==null||records.size()==0){
+        List<String> cateNames = reqDto.getCategory2name();
+        String parentCateId = reqDto.getCategoryid();
+        if(cateNames==null||cateNames.size()==0){
             baseResDto.setResultMessage("添加数据为空");
             baseResDto.setResultCode(ResultCode.RESULT_CODE_EXCEPTION.getCode());
             return baseResDto;
         }
+        if(STRUtils.isEmpty(parentCateId)){
+            baseResDto.setResultCode(ResultCode.RESULT_CODE_EXCEPTION.getCode());
+            baseResDto.setResultMessage("一级分类id is null");
+            return baseResDto;
+        }
         try{
-          businessService.insertBatch(records,db);
+            List<Dictcategory2> list = new ArrayList<>();
+            for(String name:cateNames){
+                Dictcategory2 dictcategory2 = new Dictcategory2();
+                dictcategory2.setParentcategory(parentCateId);
+                dictcategory2.setCategory(name);
+                dictcategory2.setCategoryid(STRUtils.createUUID());
+                list.add(dictcategory2);
+            }
+            businessService.insertBatch(list);
+
         }catch (Exception e){
             baseResDto.setResultCode(ResultCode.RESULT_CODE_EXCEPTION.getCode());
             baseResDto.setResultMessage("批量添加二级分类异常");
@@ -51,59 +68,59 @@ public class Dictcategory2ServiceImpl implements Dictcategory2Service {
     }
 
     /**
-     * 批量删除分类
-     * @param records
-     * @param db
+     * 查看二级分类列表
+     * @param reqDto
      * @return
      */
     @Override
-    public BaseResDto deleteBatch(List<Dictcategory2> records, Integer db) {
+    public BaseResDto queryTwoCateList(Dictcategory1ReqDto reqDto) {
         BaseResDto baseResDto = new BaseResDto();
-
-        try{
-            businessService.deleteBatch(records,db);
-        }catch (Exception e){
-            baseResDto.setResultCode(ResultCode.RESULT_CODE_EXCEPTION.getCode());
-            baseResDto.setResultMessage("批量删除二级分类异常");
-            logger.error("批量删除二级分类异常",e);
-        }
-        return baseResDto;
-    }
-
-    /**
-     * 根据分类名称查看二级分类 默认查看一级分类下的所有二级分类
-     * @param dictcategory2
-     * @return
-     */
-    @Override
-    public BaseResDto queryAllCategory2(Dictcategory2 dictcategory2 ) {
-        BaseResDto baseResDto = new BaseResDto();
-        Integer db = dictcategory2.getDb();
-        String parentCate = dictcategory2.getParentcategory();
+        String parentCate = reqDto.getCategoryid();
         if(STRUtils.isEmpty(parentCate)){
+            baseResDto.setResultMessage("categoryid is null");
             baseResDto.setResultCode(ResultCode.RESULT_CODE_EXCEPTION.getCode());
-            baseResDto.setResultMessage("一级分类不能为空");
             return baseResDto;
         }
         try{
-            List<Dictcategory2> dictcategory2s = new ArrayList<>();
-            if(db==1){
-                dictcategory2s = dictcategory2Dao.queryCategory2(dictcategory2);
-            }else{
-                dictcategory2s = dictcategory2SqlDao.queryCategory2(dictcategory2);
-            }
-            if(dictcategory2s.size()==0){
-                baseResDto.setResultMessage(" no data");
-                baseResDto.setResultCode(ResultCode.RESULT_CODE_NODATA.getCode());
+            List<Dictcategory2> dictcategory2s = dictcategory2Dao.queryByParent(parentCate);
+            if(dictcategory2s==null||dictcategory2s.size()==0){
+                baseResDto.setResultMessage("no data");
+                baseResDto.setResultCode(ResultCode.RESULT_CODE_EXCEPTION.getCode());
                 return baseResDto;
             }
             baseResDto.setData(dictcategory2s);
 
         }catch (Exception e){
-            baseResDto.setResultMessage("查看二级分类异常");
             baseResDto.setResultCode(ResultCode.RESULT_CODE_EXCEPTION.getCode());
-            logger.error("查看二级分类异常",e);
+            baseResDto.setResultMessage("查看二级分类列表异常");
+            logger.error("查看二级分类列表异常",e);
         }
         return baseResDto;
     }
+
+    /**
+     * 删除一级分类下的二级分类
+     * @param reqDto
+     * @return
+     */
+    @Override
+    public BaseResDto deleteTwoCate(Dictcategory1ReqDto reqDto) {
+        BaseResDto baseResDto = new BaseResDto();
+        List<String> twoCates = reqDto.getTwoCateIds();
+        if(twoCates==null||twoCates.size()==0){
+            baseResDto.setResultCode(ResultCode.RESULT_CODE_EXCEPTION.getCode());
+            baseResDto.setResultMessage("请选择要删除的二级分类");
+            return baseResDto;
+        }
+        try{
+            businessService.deleteTwoCate(reqDto);
+            }catch (Exception e){
+            baseResDto.setResultCode(ResultCode.RESULT_CODE_EXCEPTION.getCode());
+            baseResDto.setResultMessage("删除二级分类异常");
+            logger.error("删除二级分类异常",e);
+        }
+        return baseResDto;
+    }
+
+
 }

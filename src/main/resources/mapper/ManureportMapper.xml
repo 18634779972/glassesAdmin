@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xjt.dao.master.ManureportDao" >
+
+    <resultMap id="BaseResultMap" type="com.xjt.entity.Manureport" >
+        <id column="MRID" property="mrid" jdbcType="VARCHAR" />
+        <result column="PermitNo" property="permitno" jdbcType="VARCHAR" />
+        <result column="EnterpriseName" property="enterprisename" jdbcType="VARCHAR" />
+        <result column="Legal" property="legal" jdbcType="VARCHAR" />
+        <result column="KeyMan" property="keyman" jdbcType="VARCHAR" />
+        <result column="Home" property="home" jdbcType="VARCHAR" />
+        <result column="FactorySite" property="factorysite" jdbcType="VARCHAR" />
+        <result column="BusiScope" property="busiscope" jdbcType="LONGVARCHAR" />
+        <result column="IssueDepartment" property="issuedepartment" jdbcType="VARCHAR" />
+        <result column="IssueDate" property="issuedate" jdbcType="TIMESTAMP" />
+        <result column="ExpiryDate" property="expirydate" jdbcType="TIMESTAMP" />
+        <result column="ReportNo" property="reportno" jdbcType="VARCHAR" />
+        <result column="ReportDepartment" property="reportdepartment" jdbcType="VARCHAR" />
+        <result column="ReportDate" property="reportdate" jdbcType="TIMESTAMP" />
+        <result column="Supply_No" property="supplyNo" jdbcType="VARCHAR" />
+        <result column="Field_Ex1" property="fieldEx1" jdbcType="VARCHAR" />
+        <result column="Field_Ex2" property="fieldEx2" jdbcType="VARCHAR" />
+        <result column="Field_Ex3" property="fieldEx3" jdbcType="VARCHAR" />
+        <result column="DocDate" property="docdate" jdbcType="TIMESTAMP" />
+        <result column="UpdateTimeStamp" property="updatetimestamp" jdbcType="TIMESTAMP" />
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        MRID, PermitNo, EnterpriseName, Legal, KeyMan, Home, FactorySite, BusiScope, IssueDepartment, 
+        IssueDate, ExpiryDate, ReportNo, ReportDepartment, ReportDate, Supply_No, Field_Ex1, 
+        Field_Ex2, Field_Ex3, DocDate, UpdateTimeStamp
+    </sql>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        select 
+        <include refid="Base_Column_List" />
+        from manureport
+        where MRID = #{mrid,jdbcType=VARCHAR}
+    </select>
+    <select id="queryManureInfo" parameterType="com.xjt.entity.Manureport" resultMap="BaseResultMap">
+        select  <include refid="Base_Column_List" />
+        from busireport
+        <where>
+            <if test="permitno != null">
+                and PermitNo = #{permitno}
+            </if>
+            <if test="enterprisename != null">
+                and EnterpriseName like concat ('%',#{enterprisename},'%')
+            </if>
+            <if test="legal != null">
+                and Legal like concat('%',#{legal},'%')
+            </if>
+        </where>
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+        delete from manureport
+        where MRID = #{mrid,jdbcType=VARCHAR}
+    </delete>
+
+    <insert id="insert" parameterType="com.xjt.entity.Manureport" >
+        insert into manureport (MRID, PermitNo, EnterpriseName, 
+            Legal, KeyMan, Home, 
+            FactorySite, BusiScope, IssueDepartment, 
+            IssueDate, ExpiryDate, ReportNo, 
+            ReportDepartment, ReportDate, Supply_No, 
+            Field_Ex1, Field_Ex2, Field_Ex3, 
+            DocDate, UpdateTimeStamp)
+        values (#{mrid,jdbcType=VARCHAR}, #{permitno,jdbcType=VARCHAR}, #{enterprisename,jdbcType=VARCHAR}, 
+            #{legal,jdbcType=VARCHAR}, #{keyman,jdbcType=VARCHAR}, #{home,jdbcType=VARCHAR}, 
+            #{factorysite,jdbcType=VARCHAR}, #{busiscope,jdbcType=LONGVARCHAR}, #{issuedepartment,jdbcType=VARCHAR}, 
+            #{issuedate,jdbcType=TIMESTAMP}, #{expirydate,jdbcType=TIMESTAMP}, #{reportno,jdbcType=VARCHAR}, 
+            #{reportdepartment,jdbcType=VARCHAR}, #{reportdate,jdbcType=TIMESTAMP}, #{supplyNo,jdbcType=VARCHAR}, 
+            #{fieldEx1,jdbcType=VARCHAR}, #{fieldEx2,jdbcType=VARCHAR}, #{fieldEx3,jdbcType=VARCHAR}, 
+            #{docdate,jdbcType=TIMESTAMP}, #{updatetimestamp,jdbcType=TIMESTAMP})
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.xjt.entity.Manureport" >
+        insert into manureport
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="mrid != null" >
+                MRID,
+            </if>
+            <if test="permitno != null" >
+                PermitNo,
+            </if>
+            <if test="enterprisename != null" >
+                EnterpriseName,
+            </if>
+            <if test="legal != null" >
+                Legal,
+            </if>
+            <if test="keyman != null" >
+                KeyMan,
+            </if>
+            <if test="home != null" >
+                Home,
+            </if>
+            <if test="factorysite != null" >
+                FactorySite,
+            </if>
+            <if test="busiscope != null" >
+                BusiScope,
+            </if>
+            <if test="issuedepartment != null" >
+                IssueDepartment,
+            </if>
+            <if test="issuedate != null" >
+                IssueDate,
+            </if>
+            <if test="expirydate != null" >
+                ExpiryDate,
+            </if>
+            <if test="reportno != null" >
+                ReportNo,
+            </if>
+            <if test="reportdepartment != null" >
+                ReportDepartment,
+            </if>
+            <if test="reportdate != null" >
+                ReportDate,
+            </if>
+            <if test="supplyNo != null" >
+                Supply_No,
+            </if>
+            <if test="fieldEx1 != null" >
+                Field_Ex1,
+            </if>
+            <if test="fieldEx2 != null" >
+                Field_Ex2,
+            </if>
+            <if test="fieldEx3 != null" >
+                Field_Ex3,
+            </if>
+            <if test="docdate != null" >
+                DocDate,
+            </if>
+            <if test="updatetimestamp != null" >
+                UpdateTimeStamp,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="mrid != null" >
+                #{mrid,jdbcType=VARCHAR},
+            </if>
+            <if test="permitno != null" >
+                #{permitno,jdbcType=VARCHAR},
+            </if>
+            <if test="enterprisename != null" >
+                #{enterprisename,jdbcType=VARCHAR},
+            </if>
+            <if test="legal != null" >
+                #{legal,jdbcType=VARCHAR},
+            </if>
+            <if test="keyman != null" >
+                #{keyman,jdbcType=VARCHAR},
+            </if>
+            <if test="home != null" >
+                #{home,jdbcType=VARCHAR},
+            </if>
+            <if test="factorysite != null" >
+                #{factorysite,jdbcType=VARCHAR},
+            </if>
+            <if test="busiscope != null" >
+                #{busiscope,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="issuedepartment != null" >
+                #{issuedepartment,jdbcType=VARCHAR},
+            </if>
+            <if test="issuedate != null" >
+                #{issuedate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="expirydate != null" >
+                #{expirydate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="reportno != null" >
+                #{reportno,jdbcType=VARCHAR},
+            </if>
+            <if test="reportdepartment != null" >
+                #{reportdepartment,jdbcType=VARCHAR},
+            </if>
+            <if test="reportdate != null" >
+                #{reportdate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="supplyNo != null" >
+                #{supplyNo,jdbcType=VARCHAR},
+            </if>
+            <if test="fieldEx1 != null" >
+                #{fieldEx1,jdbcType=VARCHAR},
+            </if>
+            <if test="fieldEx2 != null" >
+                #{fieldEx2,jdbcType=VARCHAR},
+            </if>
+            <if test="fieldEx3 != null" >
+                #{fieldEx3,jdbcType=VARCHAR},
+            </if>
+            <if test="docdate != null" >
+                #{docdate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updatetimestamp != null" >
+                #{updatetimestamp,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.xjt.entity.Manureport" >
+        update manureport
+        <set >
+            <if test="permitno != null" >
+                PermitNo = #{permitno,jdbcType=VARCHAR},
+            </if>
+            <if test="enterprisename != null" >
+                EnterpriseName = #{enterprisename,jdbcType=VARCHAR},
+            </if>
+            <if test="legal != null" >
+                Legal = #{legal,jdbcType=VARCHAR},
+            </if>
+            <if test="keyman != null" >
+                KeyMan = #{keyman,jdbcType=VARCHAR},
+            </if>
+            <if test="home != null" >
+                Home = #{home,jdbcType=VARCHAR},
+            </if>
+            <if test="factorysite != null" >
+                FactorySite = #{factorysite,jdbcType=VARCHAR},
+            </if>
+            <if test="busiscope != null" >
+                BusiScope = #{busiscope,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="issuedepartment != null" >
+                IssueDepartment = #{issuedepartment,jdbcType=VARCHAR},
+            </if>
+            <if test="issuedate != null" >
+                IssueDate = #{issuedate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="expirydate != null" >
+                ExpiryDate = #{expirydate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="reportno != null" >
+                ReportNo = #{reportno,jdbcType=VARCHAR},
+            </if>
+            <if test="reportdepartment != null" >
+                ReportDepartment = #{reportdepartment,jdbcType=VARCHAR},
+            </if>
+            <if test="reportdate != null" >
+                ReportDate = #{reportdate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="supplyNo != null" >
+                Supply_No = #{supplyNo,jdbcType=VARCHAR},
+            </if>
+            <if test="fieldEx1 != null" >
+                Field_Ex1 = #{fieldEx1,jdbcType=VARCHAR},
+            </if>
+            <if test="fieldEx2 != null" >
+                Field_Ex2 = #{fieldEx2,jdbcType=VARCHAR},
+            </if>
+            <if test="fieldEx3 != null" >
+                Field_Ex3 = #{fieldEx3,jdbcType=VARCHAR},
+            </if>
+            <if test="docdate != null" >
+                DocDate = #{docdate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updatetimestamp != null" >
+                UpdateTimeStamp = #{updatetimestamp,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where MRID = #{mrid,jdbcType=VARCHAR}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.xjt.entity.Manureport" >
+        update manureport
+        set PermitNo = #{permitno,jdbcType=VARCHAR},
+            EnterpriseName = #{enterprisename,jdbcType=VARCHAR},
+            Legal = #{legal,jdbcType=VARCHAR},
+            KeyMan = #{keyman,jdbcType=VARCHAR},
+            Home = #{home,jdbcType=VARCHAR},
+            FactorySite = #{factorysite,jdbcType=VARCHAR},
+            BusiScope = #{busiscope,jdbcType=LONGVARCHAR},
+            IssueDepartment = #{issuedepartment,jdbcType=VARCHAR},
+            IssueDate = #{issuedate,jdbcType=TIMESTAMP},
+            ExpiryDate = #{expirydate,jdbcType=TIMESTAMP},
+            ReportNo = #{reportno,jdbcType=VARCHAR},
+            ReportDepartment = #{reportdepartment,jdbcType=VARCHAR},
+            ReportDate = #{reportdate,jdbcType=TIMESTAMP},
+            Supply_No = #{supplyNo,jdbcType=VARCHAR},
+            Field_Ex1 = #{fieldEx1,jdbcType=VARCHAR},
+            Field_Ex2 = #{fieldEx2,jdbcType=VARCHAR},
+            Field_Ex3 = #{fieldEx3,jdbcType=VARCHAR},
+            DocDate = #{docdate,jdbcType=TIMESTAMP},
+            UpdateTimeStamp = #{updatetimestamp,jdbcType=TIMESTAMP}
+        where MRID = #{mrid,jdbcType=VARCHAR}
+    </update>
+</mapper>

@@ -1,31 +1,42 @@
 package com.xjt.entity;
 
-import com.xjt.dto.BaseReqDto;
-
 /**
  * 
  * 
  * @author wcyong
  * 
- * @date 2019-10-18
+ * @date 2019-10-30
  */
-public class Dictcategory2 extends BaseReqDto {
+public class Dictcategory2 {
     /**
-     * 分类1
+     * 分类编号(Guid)
      */
-    private String category2;
+    private String categoryid;
 
     /**
-     * 上级分类
+     * 分类名
+     */
+    private String category;
+
+    /**
+     * 上级分类编号
      */
     private String parentcategory;
 
-    public String getCategory2() {
-        return category2;
+    public String getCategoryid() {
+        return categoryid;
     }
 
-    public void setCategory2(String category2) {
-        this.category2 = category2 == null ? null : category2.trim();
+    public void setCategoryid(String categoryid) {
+        this.categoryid = categoryid == null ? null : categoryid.trim();
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category == null ? null : category.trim();
     }
 
     public String getParentcategory() {
@@ -34,14 +45,5 @@ public class Dictcategory2 extends BaseReqDto {
 
     public void setParentcategory(String parentcategory) {
         this.parentcategory = parentcategory == null ? null : parentcategory.trim();
-    }
-
-    public Dictcategory2(){
-
-    }
-
-    public Dictcategory2(String category2, String parentcategory) {
-        this.category2 = category2;
-        this.parentcategory = parentcategory;
     }
 }

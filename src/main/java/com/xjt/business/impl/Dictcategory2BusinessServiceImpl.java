@@ -3,6 +3,7 @@ package com.xjt.business.impl;
 import com.xjt.business.Dictcategory2BusinessService;
 import com.xjt.dao.master.Dictcategory2Dao;
 import com.xjt.dao.other.Dictcategory2SqlDao;
+import com.xjt.dto.Dictcategory1ReqDto;
 import com.xjt.entity.Dictcategory2;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,44 +23,32 @@ public class Dictcategory2BusinessServiceImpl implements Dictcategory2BusinessSe
     /**
      * 批量添加二级分类
      * @param records
-     * @param db
+     * @param
      */
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public void insertBatch(List<Dictcategory2> records, Integer db) {
-        int num = 0;
-        if(db==1){
-            num =dictcategory2Dao.insertBatch(records);
+    public void insertBatch(List<Dictcategory2> records) {
+        int  num =dictcategory2Dao.insertCategory2(records);
             if(num != records.size()){
                 throw new RuntimeException("批量添加二级分类异常");
             }
-        }else{
-            num =dictcategory2SqlDao.insertBatch(records);
-            if(num != 1){
-                throw new RuntimeException("批量添加二级分类异常");
-            }
-        }
+
 
     }
 
     /**
      * 批量删除二级分类
-     * @param records
-     * @param db
+     * @param reqDto
      */
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public void deleteBatch(List<Dictcategory2> records, Integer db) {
-
-        int num =0;
-        if(db==1){
-           num = dictcategory2Dao.deleteBatch(records);
-        }else{
-            num = dictcategory2SqlDao.deleteBatch(records);
-        }
-        if(records!=null&&num != records.size()){
+    public void deleteTwoCate(Dictcategory1ReqDto reqDto) {
+        int num = dictcategory2Dao.deleteTwoCate(reqDto);
+        if(num != reqDto.getTwoCateIds().size()){
             throw new RuntimeException("批量删除二级分类异常");
         }
     }
+
+
 }

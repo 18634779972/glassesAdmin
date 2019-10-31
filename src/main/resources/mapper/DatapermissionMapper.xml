@@ -7,13 +7,13 @@
         <result column="groupmanager_id" property="groupmanagerId" jdbcType="VARCHAR" />
         <result column="dictbrand_id" property="dictbrandId" jdbcType="VARCHAR" />
         <result column="warehouse_id" property="warehouseId" jdbcType="VARCHAR" />
-        <result column="channel_id" property="channelId" jdbcType="VARCHAR" />
+        <result column="customer_id" property="customerId" jdbcType="VARCHAR" />
         <result column="supply_id" property="supplyId" jdbcType="VARCHAR" />
         <result column="price_range" property="priceRange" jdbcType="VARCHAR" />
     </resultMap>
 
     <sql id="Base_Column_List" >
-        id, groupmanager_id, dictbrand_id, warehouse_id, channel_id, supply_id, price_range
+        id, groupmanager_id, dictbrand_id, warehouse_id, customer_id, supply_id, price_range
     </sql>
 
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
@@ -23,6 +23,15 @@
         where id = #{id,jdbcType=VARCHAR}
     </select>
 
+    <!--查看用户数据权限-->
+    <select id="queryMasterPermission" parameterType="java.lang.String" resultType="com.xjt.entity.Datapermission" resultMap="BaseResultMap">
+        SELECT t2.master_id masterId, t1.dictbrand_id ,t1.warehouse_id,t1.supply_id ,t1.customer_id
+        FROM datapermission t1
+        INNER JOIN mastergroup t2
+        ON t1.groupmanager_id = t2.group_id
+        WHERE t2.master_id = #{masterId} AND t2.delete_flag = 1
+    </select>
+
     <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
         delete from datapermission
         where id = #{id,jdbcType=VARCHAR}
@@ -30,10 +39,10 @@
 
     <insert id="insert" parameterType="com.xjt.entity.Datapermission" >
         insert into datapermission (id, groupmanager_id, dictbrand_id, 
-            warehouse_id, channel_id, supply_id, 
+            warehouse_id, customer_id, supply_id,
             price_range)
         values (#{id,jdbcType=VARCHAR}, #{groupmanagerId,jdbcType=VARCHAR}, #{dictbrandId,jdbcType=VARCHAR}, 
-            #{warehouseId,jdbcType=VARCHAR}, #{channelId,jdbcType=VARCHAR}, #{supplyId,jdbcType=VARCHAR}, 
+            #{warehouseId,jdbcType=VARCHAR}, #{customerId,jdbcType=VARCHAR}, #{supplyId,jdbcType=VARCHAR},
             #{priceRange,jdbcType=VARCHAR})
     </insert>
 
@@ -52,8 +61,8 @@
             <if test="warehouseId != null" >
                 warehouse_id,
             </if>
-            <if test="channelId != null" >
-                channel_id,
+            <if test="customerId != null" >
+                customer_id,
             </if>
             <if test="supplyId != null" >
                 supply_id,
@@ -75,8 +84,8 @@
             <if test="warehouseId != null" >
                 #{warehouseId,jdbcType=VARCHAR},
             </if>
-            <if test="channelId != null" >
-                #{channelId,jdbcType=VARCHAR},
+            <if test="customerId != null" >
+                #{customerId,jdbcType=VARCHAR},
             </if>
             <if test="supplyId != null" >
                 #{supplyId,jdbcType=VARCHAR},
@@ -96,8 +105,8 @@
             <if test="warehouseId != null" >
                 warehouse_id = #{warehouseId,jdbcType=VARCHAR},
             </if>
-            <if test="channelId != null" >
-                channel_id = #{channelId,jdbcType=VARCHAR},
+            <if test="customerId != null" >
+                customer_id = #{customerId,jdbcType=VARCHAR},
             </if>
             <if test="supplyId != null" >
                 supply_id = #{supplyId,jdbcType=VARCHAR},
@@ -114,7 +123,7 @@
         set groupmanager_id = #{groupmanagerId,jdbcType=VARCHAR},
             dictbrand_id = #{dictbrandId,jdbcType=VARCHAR},
             warehouse_id = #{warehouseId,jdbcType=VARCHAR},
-            channel_id = #{channelId,jdbcType=VARCHAR},
+            customer_id = #{customerId,jdbcType=VARCHAR},
             supply_id = #{supplyId,jdbcType=VARCHAR},
             price_range = #{priceRange,jdbcType=VARCHAR}
         where id = #{id,jdbcType=VARCHAR}

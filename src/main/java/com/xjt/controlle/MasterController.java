@@ -91,4 +91,6 @@ public class MasterController  {
 
         return masterService.queryMasterInfo(id);
     }
+
+
 }

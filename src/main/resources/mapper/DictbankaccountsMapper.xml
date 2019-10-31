@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xjt.dao.master.DictbankaccountsDao" >
+
+    <resultMap id="BaseResultMap" type="com.xjt.entity.Dictbankaccounts" >
+        <id column="ID" property="id" jdbcType="VARCHAR" />
+        <result column="Bank" property="bank" jdbcType="VARCHAR" />
+        <result column="BankAddr" property="bankaddr" jdbcType="VARCHAR" />
+        <result column="AccountsName" property="accountsname" jdbcType="VARCHAR" />
+        <result column="Accounts" property="accounts" jdbcType="VARCHAR" />
+        <result column="BankNumber" property="banknumber" jdbcType="VARCHAR" />
+        <result column="Tel" property="tel" jdbcType="VARCHAR" />
+        <result column="BankTel" property="banktel" jdbcType="VARCHAR" />
+        <result column="cMemo" property="cmemo" jdbcType="VARCHAR" />
+        <result column="Supply_No" property="supplyNo" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        ID, Bank, BankAddr, AccountsName, Accounts, BankNumber, Tel, BankTel, cMemo, Supply_No
+    </sql>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        select 
+        <include refid="Base_Column_List" />
+        from dictbankaccounts
+        where ID = #{id,jdbcType=VARCHAR}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+        delete from dictbankaccounts
+        where ID = #{id,jdbcType=VARCHAR}
+    </delete>
+
+    <insert id="insert" parameterType="com.xjt.entity.Dictbankaccounts" >
+        insert into dictbankaccounts (ID, Bank, BankAddr, 
+            AccountsName, Accounts, BankNumber, 
+            Tel, BankTel, cMemo, 
+            Supply_No)
+        values (#{id,jdbcType=VARCHAR}, #{bank,jdbcType=VARCHAR}, #{bankaddr,jdbcType=VARCHAR}, 
+            #{accountsname,jdbcType=VARCHAR}, #{accounts,jdbcType=VARCHAR}, #{banknumber,jdbcType=VARCHAR}, 
+            #{tel,jdbcType=VARCHAR}, #{banktel,jdbcType=VARCHAR}, #{cmemo,jdbcType=VARCHAR}, 
+            #{supplyNo,jdbcType=VARCHAR})
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.xjt.entity.Dictbankaccounts" >
+        insert into dictbankaccounts
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                ID,
+            </if>
+            <if test="bank != null" >
+                Bank,
+            </if>
+            <if test="bankaddr != null" >
+                BankAddr,
+            </if>
+            <if test="accountsname != null" >
+                AccountsName,
+            </if>
+            <if test="accounts != null" >
+                Accounts,
+            </if>
+            <if test="banknumber != null" >
+                BankNumber,
+            </if>
+            <if test="tel != null" >
+                Tel,
+            </if>
+            <if test="banktel != null" >
+                BankTel,
+            </if>
+            <if test="cmemo != null" >
+                cMemo,
+            </if>
+            <if test="supplyNo != null" >
+                Supply_No,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="bank != null" >
+                #{bank,jdbcType=VARCHAR},
+            </if>
+            <if test="bankaddr != null" >
+                #{bankaddr,jdbcType=VARCHAR},
+            </if>
+            <if test="accountsname != null" >
+                #{accountsname,jdbcType=VARCHAR},
+            </if>
+            <if test="accounts != null" >
+                #{accounts,jdbcType=VARCHAR},
+            </if>
+            <if test="banknumber != null" >
+                #{banknumber,jdbcType=VARCHAR},
+            </if>
+            <if test="tel != null" >
+                #{tel,jdbcType=VARCHAR},
+            </if>
+            <if test="banktel != null" >
+                #{banktel,jdbcType=VARCHAR},
+            </if>
+            <if test="cmemo != null" >
+                #{cmemo,jdbcType=VARCHAR},
+            </if>
+            <if test="supplyNo != null" >
+                #{supplyNo,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.xjt.entity.Dictbankaccounts" >
+        update dictbankaccounts
+        <set >
+            <if test="bank != null" >
+                Bank = #{bank,jdbcType=VARCHAR},
+            </if>
+            <if test="bankaddr != null" >
+                BankAddr = #{bankaddr,jdbcType=VARCHAR},
+            </if>
+            <if test="accountsname != null" >
+                AccountsName = #{accountsname,jdbcType=VARCHAR},
+            </if>
+            <if test="accounts != null" >
+                Accounts = #{accounts,jdbcType=VARCHAR},
+            </if>
+            <if test="banknumber != null" >
+                BankNumber = #{banknumber,jdbcType=VARCHAR},
+            </if>
+            <if test="tel != null" >
+                Tel = #{tel,jdbcType=VARCHAR},
+            </if>
+            <if test="banktel != null" >
+                BankTel = #{banktel,jdbcType=VARCHAR},
+            </if>
+            <if test="cmemo != null" >
+                cMemo = #{cmemo,jdbcType=VARCHAR},
+            </if>
+            <if test="supplyNo != null" >
+                Supply_No = #{supplyNo,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where ID = #{id,jdbcType=VARCHAR}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.xjt.entity.Dictbankaccounts" >
+        update dictbankaccounts
+        set Bank = #{bank,jdbcType=VARCHAR},
+            BankAddr = #{bankaddr,jdbcType=VARCHAR},
+            AccountsName = #{accountsname,jdbcType=VARCHAR},
+            Accounts = #{accounts,jdbcType=VARCHAR},
+            BankNumber = #{banknumber,jdbcType=VARCHAR},
+            Tel = #{tel,jdbcType=VARCHAR},
+            BankTel = #{banktel,jdbcType=VARCHAR},
+            cMemo = #{cmemo,jdbcType=VARCHAR},
+            Supply_No = #{supplyNo,jdbcType=VARCHAR}
+        where ID = #{id,jdbcType=VARCHAR}
+    </update>
+</mapper>

@@ -2,64 +2,57 @@ package com.xjt.controlle;
 
 import com.alibaba.fastjson.JSONObject;
 import com.xjt.dto.BaseResDto;
+import com.xjt.dto.Dictcategory1ReqDto;
 import com.xjt.entity.Dictcategory2;
 import com.xjt.service.Dictcategory2Service;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @RestController
+@Api(tags = "二级分类相关接口")
+@RequestMapping("/twoCate")
 public class Dictcategory2Controller {
 
     @Autowired
     private Dictcategory2Service dictcategory2Service;
 
-    static Logger logger = LoggerFactory.getLogger(Dictcategory2Controller.class);
 
-    /**
-     * 批量添加二级分类
-     * @param records
-     * @param db
-     * @return
-     */
-    @RequestMapping("/insertBatchcate")
-    public BaseResDto insertBatch(@RequestBody List<Dictcategory2> records, @RequestParam("db") Integer db){
-        return dictcategory2Service.insertBatch(records,db);
+
+    @PostMapping("/insertTwoCate")
+    @ApiOperation("一级分类下批量添加二级分类")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "category2name",value = "二级分类名",required = true),
+            @ApiImplicitParam(name = "categoryid",value = "父级分类id",required = true)
+    })
+    public BaseResDto insertTwoCate(Dictcategory1ReqDto reqDto){
+
+        return dictcategory2Service.insertBatch(reqDto);
     }
 
-    /**
-     * 批量删除二级分类 可以全部删除一级分类下的所有 也可以删除单个二级分类
-     * @param records
-     * @param db
-     * @return
-     */
-    @RequestMapping("/deleteBatchcate")
-    public BaseResDto deleteBatch(@RequestBody List<Dictcategory2> records,@RequestParam("db") Integer db){
-        return dictcategory2Service.deleteBatch(records,db);
+    @GetMapping("/queryTwoCateList")
+    @ApiOperation("查看二级分类列表")
+    @ApiImplicitParam(name = "categoryid",value = "一级分类id",required = true)
+    public BaseResDto queryTwoCateList(Dictcategory1ReqDto reqDto){
+        return dictcategory2Service.queryTwoCateList(reqDto);
     }
 
-    /**
-     * 默认查看一级分类下的所有二级分类
-     * @param dictcategory2
-     * @return
-     */
-    @RequestMapping("/queryAllCategory")
-    public BaseResDto queryAllCategory(Dictcategory2 dictcategory2){
-        return dictcategory2Service.queryAllCategory2(dictcategory2);
+
+    @PostMapping("/deleteTwoCate")
+    @ApiOperation("删除二级分类")
+    @ApiImplicitParam(name = "twoCateIds",value = "二级分类id",required = true)
+    public BaseResDto deleteTwoCate(Dictcategory1ReqDto reqDto){
+        return dictcategory2Service.deleteTwoCate(reqDto);
     }
 
-    public static void main(String[] args){
-        List<Dictcategory2> dictcategory2s = new ArrayList<>();
-        dictcategory2s.add(new Dictcategory2("女士卫衣","卫衣"));
-        dictcategory2s.add(new Dictcategory2("男士卫衣","卫衣"));
-        dictcategory2s.add(new Dictcategory2("男士短裤","短裤"));
-        logger.info(JSONObject.toJSONString(dictcategory2s));
-    }
+
+
 }

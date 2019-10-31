@@ -9,6 +9,8 @@ import com.xjt.dto.MasterReqDto;
 import com.xjt.entity.Master;
 import com.xjt.enums.ResultCode;
 import com.xjt.service.MasterService;
+import com.xjt.utils.GeneratePassword;
+import com.xjt.utils.MD5Util;
 import com.xjt.utils.STRUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -176,6 +178,44 @@ public class MasterServiceImpl implements MasterService {
             baseResDto.setResultMessage("It has an exception to query the master");
             baseResDto.setResultCode(ResultCode.RESULT_CODE_EXCEPTION.getCode());
             logger.error("根据id查看用户信息异常",e);
+        }
+        return baseResDto;
+    }
+
+    /**
+     * 处理用户登录
+     * @param reqDto
+     * @return
+     */
+    @Override
+    public BaseResDto userLoginResolve(MasterReqDto reqDto) {
+        BaseResDto baseResDto = new BaseResDto();
+        String userName = reqDto.getName();
+        String password = reqDto.getPassword();
+        if(STRUtils.isEmpty(userName)){
+            baseResDto.setResultMessage("用户名不能为空");
+            baseResDto.setResultCode(ResultCode.RESULT_CODE_EXCEPTION.getCode());
+            return baseResDto;
+        }
+        if(STRUtils.isEmpty(password)){
+            baseResDto.setResultMessage("密码不能为空");
+            baseResDto.setResultCode(ResultCode.RESULT_CODE_EXCEPTION.getCode());
+            return baseResDto;
+        }
+        try{
+
+            Master master = masterDao.selectByNP(userName, MD5Util.stringTO_MD5(password));
+            if(master==null){
+                baseResDto.setResultMessage("用户名或密码错误");
+                baseResDto.setResultCode(ResultCode.RESULT_CODE_EXCEPTION.getCode());
+                logger.info("用户名或密码错误");
+                return baseResDto;
+            }
+            baseResDto.setData(master);
+        }catch (Exception e){
+            baseResDto.setResultCode(ResultCode.RESULT_CODE_EXCEPTION.getCode());
+            baseResDto.setResultMessage("用户登录异常");
+            logger.error("用户登录异常");
         }
         return baseResDto;
     }

@@ -26,8 +26,9 @@ public class DatapermissionServiceImpl implements DatapermissionService {
     private DatapermissionDao datapermissionDao;
     @Resource
     private DictbrandDao dictbrandDao;
+
     @Resource
-    private ChannelDao channelDao;
+    private CustomerDao customerDao;
     @Resource
     private SupplyDao supplyDao;
     @Resource
@@ -124,31 +125,30 @@ public class DatapermissionServiceImpl implements DatapermissionService {
      * @return
      */
     @Override
-    public BaseResDto queryChannelPermission(DatapermissionReqDto reqDto) {
+    public BaseResDto queryCustomerPermission(DatapermissionReqDto reqDto) {
         BaseResDto baseResDto = new BaseResDto();
         if(!checkParam(reqDto,baseResDto)){
             return baseResDto;
         }
         try{
-            reqDto.setColName("channel_id");
-            String channel = datapermissionDao.queryDiffPermission(reqDto);
-            if(STRUtils.isEmpty(channel)){
+            reqDto.setColName("customer_id");
+            String brands = datapermissionDao.queryDiffPermission(reqDto);
+            if(STRUtils.isEmpty(brands)){
+                baseResDto.setResultMessage("管理组没有对应的渠道");
                 baseResDto.setResultCode(ResultCode.RESULT_CODE_NODATA.getCode());
-                baseResDto.setResultMessage("没有对应的渠道");
                 return baseResDto;
             }
-            List<String> channelIds = Arrays.asList(channel.split(","));
-            List<Channel> channels = channelDao.queryChannelList(channelIds);
-            baseResDto.setData(channels);
-
-
+            List<String> customerIds = Arrays.asList(brands.split(","));
+            List<Customer> customers = customerDao.queryCustomerByIds(customerIds);
+            baseResDto.setData(customerIds);
         }catch (Exception e){
-            baseResDto.setResultMessage("查看管理组渠道权限异常");
             baseResDto.setResultCode(ResultCode.RESULT_CODE_EXCEPTION.getCode());
+            baseResDto.setResultMessage("查看管理组渠道权限异常");
             logger.error("查看管理组渠道权限异常",e);
         }
         return baseResDto;
     }
+
 
     /**
      * 查看管理组仓库权限

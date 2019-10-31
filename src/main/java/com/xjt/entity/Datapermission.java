@@ -31,7 +31,7 @@ public class Datapermission {
     /**
      * 渠道id(关联channel)
      */
-    private String channelId;
+    private String customerId;
 
     /**
      * 供应商id(关联supply表)
@@ -42,6 +42,10 @@ public class Datapermission {
      * 价格(0是进货价,1是零售价,2是附加价,3是批发价,4是加盟价)
      */
     private String priceRange;
+    /**
+     * 用户id
+     */
+    private String masterId;
 
     public String getId() {
         return id;
@@ -75,12 +79,12 @@ public class Datapermission {
         this.warehouseId = warehouseId == null ? null : warehouseId.trim();
     }
 
-    public String getChannelId() {
-        return channelId;
+    public String getCustomerId() {
+        return customerId;
     }
 
-    public void setChannelId(String channelId) {
-        this.channelId = channelId == null ? null : channelId.trim();
+    public void setCustomerId(String customerId) {
+        this.customerId = customerId;
     }
 
     public String getSupplyId() {
@@ -97,5 +101,13 @@ public class Datapermission {
 
     public void setPriceRange(String priceRange) {
         this.priceRange = priceRange == null ? null : priceRange.trim();
+    }
+
+    public String getMasterId() {
+        return masterId;
+    }
+
+    public void setMasterId(String masterId) {
+        this.masterId = masterId;
     }
 }

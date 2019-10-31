@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xjt.dao.master.CustomeraccountsDao" >
+
+    <resultMap id="BaseResultMap" type="com.xjt.entity.CustomeraccountsKey" >
+        <id column="ID" property="id" jdbcType="VARCHAR" />
+        <id column="Customer_ID" property="customerId" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <delete id="deleteByPrimaryKey" parameterType="com.xjt.entity.CustomeraccountsKey" >
+        delete from customeraccounts
+        where ID = #{id,jdbcType=VARCHAR}
+          and Customer_ID = #{customerId,jdbcType=VARCHAR}
+    </delete>
+
+    <insert id="insert" parameterType="com.xjt.entity.CustomeraccountsKey" >
+        insert into customeraccounts (ID, Customer_ID)
+        values (#{id,jdbcType=VARCHAR}, #{customerId,jdbcType=VARCHAR})
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.xjt.entity.CustomeraccountsKey" >
+        insert into customeraccounts
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                ID,
+            </if>
+            <if test="customerId != null" >
+                Customer_ID,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="customerId != null" >
+                #{customerId,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+</mapper>

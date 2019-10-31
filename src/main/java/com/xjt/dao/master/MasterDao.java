@@ -2,11 +2,21 @@ package com.xjt.dao.master;
 
 import com.xjt.entity.Master;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
 @Mapper
 public interface MasterDao {
+
+    /**
+     * 根据用户名，密码查看是都由此用户
+     * @param
+     * @return
+     */
+    Master selectByNP(@Param("userName") String userName,@Param("password") String password);
+
+
     int deleteByPrimaryKey(String id);
 
     /**

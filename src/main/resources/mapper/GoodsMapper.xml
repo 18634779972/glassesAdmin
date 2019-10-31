@@ -1,0 +1,497 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xjt.dao.master.GoodsDao" >
+
+    <resultMap id="BaseResultMap" type="com.xjt.entity.Goods" >
+        <id column="GoodsID" property="goodsid" jdbcType="VARCHAR" />
+        <result column="GoodsNo" property="goodsno" jdbcType="VARCHAR" />
+        <result column="GoodsManuNo" property="goodsmanuno" jdbcType="VARCHAR" />
+        <result column="cType" property="ctype" jdbcType="VARCHAR" />
+        <result column="Integral" property="integral" jdbcType="INTEGER" />
+        <result column="ADDValue" property="addvalue" jdbcType="INTEGER" />
+        <result column="TaxRate" property="taxrate" jdbcType="VARCHAR" />
+        <result column="InputMan" property="inputman" jdbcType="VARCHAR" />
+        <result column="InputDate" property="inputdate" jdbcType="VARCHAR" />
+        <result column="UpdateTimeStamp" property="updatetimestamp" jdbcType="TIMESTAMP" />
+        <result column="ShutOut" property="shutout" jdbcType="INTEGER" />
+        <result column="IsValidity" property="isvalidity" jdbcType="INTEGER" />
+        <result column="EffectiveDays" property="effectivedays" jdbcType="INTEGER" />
+        <result column="IsBatch" property="isbatch" jdbcType="INTEGER" />
+        <result column="IsAttach" property="isattach" jdbcType="INTEGER" />
+        <result column="IsVirtual" property="isvirtual" jdbcType="INTEGER" />
+        <result column="GoodsName" property="goodsname" jdbcType="VARCHAR" />
+        <result column="Brand" property="brand" jdbcType="VARCHAR" />
+        <result column="cRange" property="crange" jdbcType="VARCHAR" />
+        <result column="cYear" property="cyear" jdbcType="VARCHAR" />
+        <result column="Season" property="season" jdbcType="VARCHAR" />
+        <result column="Property" property="property" jdbcType="VARCHAR" />
+        <result column="Unit" property="unit" jdbcType="VARCHAR" />
+        <result column="CategoryID" property="categoryid" jdbcType="VARCHAR" />
+        <result column="CategoryID2" property="categoryid2" jdbcType="VARCHAR" />
+        <result column="Pattem" property="pattem" jdbcType="VARCHAR" />
+        <result column="ExecuteStandard" property="executestandard" jdbcType="VARCHAR" />
+        <result column="SafeCategory" property="safecategory" jdbcType="VARCHAR" />
+        <result column="ProducingArea" property="producingarea" jdbcType="VARCHAR" />
+        <result column="AbbeNumber" property="abbenumber" jdbcType="VARCHAR" />
+        <result column="RefractiveIndex" property="refractiveindex" jdbcType="DECIMAL" />
+        <result column="Supply_No" property="supplyNo" jdbcType="VARCHAR" />
+        <result column="cMemo" property="cmemo" jdbcType="VARCHAR" />
+        <result column="Field1" property="field1" jdbcType="VARCHAR" />
+        <result column="Field2" property="field2" jdbcType="VARCHAR" />
+        <result column="Field3" property="field3" jdbcType="VARCHAR" />
+        <result column="Field4" property="field4" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        GoodsID, GoodsNo, GoodsManuNo, cType, Integral, ADDValue, TaxRate, InputMan, InputDate, 
+        UpdateTimeStamp, ShutOut, IsValidity, EffectiveDays, IsBatch, IsAttach, IsVirtual, 
+        GoodsName, Brand, cRange, cYear, Season, Property, Unit, CategoryID, CategoryID2, 
+        Pattem, ExecuteStandard, SafeCategory, ProducingArea, AbbeNumber, RefractiveIndex, 
+        Supply_No, cMemo, Field1, Field2, Field3, Field4
+    </sql>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        select 
+        <include refid="Base_Column_List" />
+        from goods
+        where GoodsID = #{goodsid,jdbcType=VARCHAR}
+    </select>
+    <select id="queryGoodsList" resultMap="BaseResultMap" parameterType="com.xjt.dto.GoodsReqDto">
+        select
+        GoodsID,GoodsName
+        from goods
+          where CategoryID2 = #{categoryid2,jdbcType=VARCHAR}
+          <if test="brands!=null">
+              and Brand in
+               <foreach collection="brands" item="brand" open="(" close=")" index="index" separator=",">
+                   #{brand}
+               </foreach>
+          </if>
+          <if test="supplys!=null">
+              and Supply_No in
+              <foreach collection="supplys" item="supply" open="(" separator="," close=")" index="index">
+                  #{supply}
+              </foreach>
+          </if>
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+        delete from goods
+        where GoodsID = #{goodsid,jdbcType=VARCHAR}
+    </delete>
+
+    <insert id="insert" parameterType="com.xjt.entity.Goods" >
+        insert into goods (GoodsID, GoodsNo, GoodsManuNo, 
+            cType, Integral, ADDValue, 
+            TaxRate, InputMan, InputDate, 
+            UpdateTimeStamp, ShutOut, IsValidity, 
+            EffectiveDays, IsBatch, IsAttach, 
+            IsVirtual, GoodsName, Brand, 
+            cRange, cYear, Season, 
+            Property, Unit, CategoryID, 
+            CategoryID2, Pattem, ExecuteStandard, 
+            SafeCategory, ProducingArea, AbbeNumber, 
+            RefractiveIndex, Supply_No, cMemo, 
+            Field1, Field2, Field3, 
+            Field4)
+        values (#{goodsid,jdbcType=VARCHAR}, #{goodsno,jdbcType=VARCHAR}, #{goodsmanuno,jdbcType=VARCHAR}, 
+            #{ctype,jdbcType=VARCHAR}, #{integral,jdbcType=INTEGER}, #{addvalue,jdbcType=INTEGER}, 
+            #{taxrate,jdbcType=VARCHAR}, #{inputman,jdbcType=VARCHAR}, #{inputdate,jdbcType=VARCHAR}, 
+            #{updatetimestamp,jdbcType=TIMESTAMP}, #{shutout,jdbcType=INTEGER}, #{isvalidity,jdbcType=INTEGER}, 
+            #{effectivedays,jdbcType=INTEGER}, #{isbatch,jdbcType=INTEGER}, #{isattach,jdbcType=INTEGER}, 
+            #{isvirtual,jdbcType=INTEGER}, #{goodsname,jdbcType=VARCHAR}, #{brand,jdbcType=VARCHAR}, 
+            #{crange,jdbcType=VARCHAR}, #{cyear,jdbcType=VARCHAR}, #{season,jdbcType=VARCHAR}, 
+            #{property,jdbcType=VARCHAR}, #{unit,jdbcType=VARCHAR}, #{categoryid,jdbcType=VARCHAR}, 
+            #{categoryid2,jdbcType=VARCHAR}, #{pattem,jdbcType=VARCHAR}, #{executestandard,jdbcType=VARCHAR}, 
+            #{safecategory,jdbcType=VARCHAR}, #{producingarea,jdbcType=VARCHAR}, #{abbenumber,jdbcType=VARCHAR}, 
+            #{refractiveindex,jdbcType=DECIMAL}, #{supplyNo,jdbcType=VARCHAR}, #{cmemo,jdbcType=VARCHAR}, 
+            #{field1,jdbcType=VARCHAR}, #{field2,jdbcType=VARCHAR}, #{field3,jdbcType=VARCHAR}, 
+            #{field4,jdbcType=VARCHAR})
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.xjt.entity.Goods" >
+        insert into goods
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="goodsid != null" >
+                GoodsID,
+            </if>
+            <if test="goodsno != null" >
+                GoodsNo,
+            </if>
+            <if test="goodsmanuno != null" >
+                GoodsManuNo,
+            </if>
+            <if test="ctype != null" >
+                cType,
+            </if>
+            <if test="integral != null" >
+                Integral,
+            </if>
+            <if test="addvalue != null" >
+                ADDValue,
+            </if>
+            <if test="taxrate != null" >
+                TaxRate,
+            </if>
+            <if test="inputman != null" >
+                InputMan,
+            </if>
+            <if test="inputdate != null" >
+                InputDate,
+            </if>
+            <if test="updatetimestamp != null" >
+                UpdateTimeStamp,
+            </if>
+            <if test="shutout != null" >
+                ShutOut,
+            </if>
+            <if test="isvalidity != null" >
+                IsValidity,
+            </if>
+            <if test="effectivedays != null" >
+                EffectiveDays,
+            </if>
+            <if test="isbatch != null" >
+                IsBatch,
+            </if>
+            <if test="isattach != null" >
+                IsAttach,
+            </if>
+            <if test="isvirtual != null" >
+                IsVirtual,
+            </if>
+            <if test="goodsname != null" >
+                GoodsName,
+            </if>
+            <if test="brand != null" >
+                Brand,
+            </if>
+            <if test="crange != null" >
+                cRange,
+            </if>
+            <if test="cyear != null" >
+                cYear,
+            </if>
+            <if test="season != null" >
+                Season,
+            </if>
+            <if test="property != null" >
+                Property,
+            </if>
+            <if test="unit != null" >
+                Unit,
+            </if>
+            <if test="categoryid != null" >
+                CategoryID,
+            </if>
+            <if test="categoryid2 != null" >
+                CategoryID2,
+            </if>
+            <if test="pattem != null" >
+                Pattem,
+            </if>
+            <if test="executestandard != null" >
+                ExecuteStandard,
+            </if>
+            <if test="safecategory != null" >
+                SafeCategory,
+            </if>
+            <if test="producingarea != null" >
+                ProducingArea,
+            </if>
+            <if test="abbenumber != null" >
+                AbbeNumber,
+            </if>
+            <if test="refractiveindex != null" >
+                RefractiveIndex,
+            </if>
+            <if test="supplyNo != null" >
+                Supply_No,
+            </if>
+            <if test="cmemo != null" >
+                cMemo,
+            </if>
+            <if test="field1 != null" >
+                Field1,
+            </if>
+            <if test="field2 != null" >
+                Field2,
+            </if>
+            <if test="field3 != null" >
+                Field3,
+            </if>
+            <if test="field4 != null" >
+                Field4,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="goodsid != null" >
+                #{goodsid,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsno != null" >
+                #{goodsno,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsmanuno != null" >
+                #{goodsmanuno,jdbcType=VARCHAR},
+            </if>
+            <if test="ctype != null" >
+                #{ctype,jdbcType=VARCHAR},
+            </if>
+            <if test="integral != null" >
+                #{integral,jdbcType=INTEGER},
+            </if>
+            <if test="addvalue != null" >
+                #{addvalue,jdbcType=INTEGER},
+            </if>
+            <if test="taxrate != null" >
+                #{taxrate,jdbcType=VARCHAR},
+            </if>
+            <if test="inputman != null" >
+                #{inputman,jdbcType=VARCHAR},
+            </if>
+            <if test="inputdate != null" >
+                #{inputdate,jdbcType=VARCHAR},
+            </if>
+            <if test="updatetimestamp != null" >
+                #{updatetimestamp,jdbcType=TIMESTAMP},
+            </if>
+            <if test="shutout != null" >
+                #{shutout,jdbcType=INTEGER},
+            </if>
+            <if test="isvalidity != null" >
+                #{isvalidity,jdbcType=INTEGER},
+            </if>
+            <if test="effectivedays != null" >
+                #{effectivedays,jdbcType=INTEGER},
+            </if>
+            <if test="isbatch != null" >
+                #{isbatch,jdbcType=INTEGER},
+            </if>
+            <if test="isattach != null" >
+                #{isattach,jdbcType=INTEGER},
+            </if>
+            <if test="isvirtual != null" >
+                #{isvirtual,jdbcType=INTEGER},
+            </if>
+            <if test="goodsname != null" >
+                #{goodsname,jdbcType=VARCHAR},
+            </if>
+            <if test="brand != null" >
+                #{brand,jdbcType=VARCHAR},
+            </if>
+            <if test="crange != null" >
+                #{crange,jdbcType=VARCHAR},
+            </if>
+            <if test="cyear != null" >
+                #{cyear,jdbcType=VARCHAR},
+            </if>
+            <if test="season != null" >
+                #{season,jdbcType=VARCHAR},
+            </if>
+            <if test="property != null" >
+                #{property,jdbcType=VARCHAR},
+            </if>
+            <if test="unit != null" >
+                #{unit,jdbcType=VARCHAR},
+            </if>
+            <if test="categoryid != null" >
+                #{categoryid,jdbcType=VARCHAR},
+            </if>
+            <if test="categoryid2 != null" >
+                #{categoryid2,jdbcType=VARCHAR},
+            </if>
+            <if test="pattem != null" >
+                #{pattem,jdbcType=VARCHAR},
+            </if>
+            <if test="executestandard != null" >
+                #{executestandard,jdbcType=VARCHAR},
+            </if>
+            <if test="safecategory != null" >
+                #{safecategory,jdbcType=VARCHAR},
+            </if>
+            <if test="producingarea != null" >
+                #{producingarea,jdbcType=VARCHAR},
+            </if>
+            <if test="abbenumber != null" >
+                #{abbenumber,jdbcType=VARCHAR},
+            </if>
+            <if test="refractiveindex != null" >
+                #{refractiveindex,jdbcType=DECIMAL},
+            </if>
+            <if test="supplyNo != null" >
+                #{supplyNo,jdbcType=VARCHAR},
+            </if>
+            <if test="cmemo != null" >
+                #{cmemo,jdbcType=VARCHAR},
+            </if>
+            <if test="field1 != null" >
+                #{field1,jdbcType=VARCHAR},
+            </if>
+            <if test="field2 != null" >
+                #{field2,jdbcType=VARCHAR},
+            </if>
+            <if test="field3 != null" >
+                #{field3,jdbcType=VARCHAR},
+            </if>
+            <if test="field4 != null" >
+                #{field4,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.xjt.entity.Goods" >
+        update goods
+        <set >
+            <if test="goodsno != null" >
+                GoodsNo = #{goodsno,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsmanuno != null" >
+                GoodsManuNo = #{goodsmanuno,jdbcType=VARCHAR},
+            </if>
+            <if test="ctype != null" >
+                cType = #{ctype,jdbcType=VARCHAR},
+            </if>
+            <if test="integral != null" >
+                Integral = #{integral,jdbcType=INTEGER},
+            </if>
+            <if test="addvalue != null" >
+                ADDValue = #{addvalue,jdbcType=INTEGER},
+            </if>
+            <if test="taxrate != null" >
+                TaxRate = #{taxrate,jdbcType=VARCHAR},
+            </if>
+            <if test="inputman != null" >
+                InputMan = #{inputman,jdbcType=VARCHAR},
+            </if>
+            <if test="inputdate != null" >
+                InputDate = #{inputdate,jdbcType=VARCHAR},
+            </if>
+            <if test="updatetimestamp != null" >
+                UpdateTimeStamp = #{updatetimestamp,jdbcType=TIMESTAMP},
+            </if>
+            <if test="shutout != null" >
+                ShutOut = #{shutout,jdbcType=INTEGER},
+            </if>
+            <if test="isvalidity != null" >
+                IsValidity = #{isvalidity,jdbcType=INTEGER},
+            </if>
+            <if test="effectivedays != null" >
+                EffectiveDays = #{effectivedays,jdbcType=INTEGER},
+            </if>
+            <if test="isbatch != null" >
+                IsBatch = #{isbatch,jdbcType=INTEGER},
+            </if>
+            <if test="isattach != null" >
+                IsAttach = #{isattach,jdbcType=INTEGER},
+            </if>
+            <if test="isvirtual != null" >
+                IsVirtual = #{isvirtual,jdbcType=INTEGER},
+            </if>
+            <if test="goodsname != null" >
+                GoodsName = #{goodsname,jdbcType=VARCHAR},
+            </if>
+            <if test="brand != null" >
+                Brand = #{brand,jdbcType=VARCHAR},
+            </if>
+            <if test="crange != null" >
+                cRange = #{crange,jdbcType=VARCHAR},
+            </if>
+            <if test="cyear != null" >
+                cYear = #{cyear,jdbcType=VARCHAR},
+            </if>
+            <if test="season != null" >
+                Season = #{season,jdbcType=VARCHAR},
+            </if>
+            <if test="property != null" >
+                Property = #{property,jdbcType=VARCHAR},
+            </if>
+            <if test="unit != null" >
+                Unit = #{unit,jdbcType=VARCHAR},
+            </if>
+            <if test="categoryid != null" >
+                CategoryID = #{categoryid,jdbcType=VARCHAR},
+            </if>
+            <if test="categoryid2 != null" >
+                CategoryID2 = #{categoryid2,jdbcType=VARCHAR},
+            </if>
+            <if test="pattem != null" >
+                Pattem = #{pattem,jdbcType=VARCHAR},
+            </if>
+            <if test="executestandard != null" >
+                ExecuteStandard = #{executestandard,jdbcType=VARCHAR},
+            </if>
+            <if test="safecategory != null" >
+                SafeCategory = #{safecategory,jdbcType=VARCHAR},
+            </if>
+            <if test="producingarea != null" >
+                ProducingArea = #{producingarea,jdbcType=VARCHAR},
+            </if>
+            <if test="abbenumber != null" >
+                AbbeNumber = #{abbenumber,jdbcType=VARCHAR},
+            </if>
+            <if test="refractiveindex != null" >
+                RefractiveIndex = #{refractiveindex,jdbcType=DECIMAL},
+            </if>
+            <if test="supplyNo != null" >
+                Supply_No = #{supplyNo,jdbcType=VARCHAR},
+            </if>
+            <if test="cmemo != null" >
+                cMemo = #{cmemo,jdbcType=VARCHAR},
+            </if>
+            <if test="field1 != null" >
+                Field1 = #{field1,jdbcType=VARCHAR},
+            </if>
+            <if test="field2 != null" >
+                Field2 = #{field2,jdbcType=VARCHAR},
+            </if>
+            <if test="field3 != null" >
+                Field3 = #{field3,jdbcType=VARCHAR},
+            </if>
+            <if test="field4 != null" >
+                Field4 = #{field4,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where GoodsID = #{goodsid,jdbcType=VARCHAR}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.xjt.entity.Goods" >
+        update goods
+        set GoodsNo = #{goodsno,jdbcType=VARCHAR},
+            GoodsManuNo = #{goodsmanuno,jdbcType=VARCHAR},
+            cType = #{ctype,jdbcType=VARCHAR},
+            Integral = #{integral,jdbcType=INTEGER},
+            ADDValue = #{addvalue,jdbcType=INTEGER},
+            TaxRate = #{taxrate,jdbcType=VARCHAR},
+            InputMan = #{inputman,jdbcType=VARCHAR},
+            InputDate = #{inputdate,jdbcType=VARCHAR},
+            UpdateTimeStamp = #{updatetimestamp,jdbcType=TIMESTAMP},
+            ShutOut = #{shutout,jdbcType=INTEGER},
+            IsValidity = #{isvalidity,jdbcType=INTEGER},
+            EffectiveDays = #{effectivedays,jdbcType=INTEGER},
+            IsBatch = #{isbatch,jdbcType=INTEGER},
+            IsAttach = #{isattach,jdbcType=INTEGER},
+            IsVirtual = #{isvirtual,jdbcType=INTEGER},
+            GoodsName = #{goodsname,jdbcType=VARCHAR},
+            Brand = #{brand,jdbcType=VARCHAR},
+            cRange = #{crange,jdbcType=VARCHAR},
+            cYear = #{cyear,jdbcType=VARCHAR},
+            Season = #{season,jdbcType=VARCHAR},
+            Property = #{property,jdbcType=VARCHAR},
+            Unit = #{unit,jdbcType=VARCHAR},
+            CategoryID = #{categoryid,jdbcType=VARCHAR},
+            CategoryID2 = #{categoryid2,jdbcType=VARCHAR},
+            Pattem = #{pattem,jdbcType=VARCHAR},
+            ExecuteStandard = #{executestandard,jdbcType=VARCHAR},
+            SafeCategory = #{safecategory,jdbcType=VARCHAR},
+            ProducingArea = #{producingarea,jdbcType=VARCHAR},
+            AbbeNumber = #{abbenumber,jdbcType=VARCHAR},
+            RefractiveIndex = #{refractiveindex,jdbcType=DECIMAL},
+            Supply_No = #{supplyNo,jdbcType=VARCHAR},
+            cMemo = #{cmemo,jdbcType=VARCHAR},
+            Field1 = #{field1,jdbcType=VARCHAR},
+            Field2 = #{field2,jdbcType=VARCHAR},
+            Field3 = #{field3,jdbcType=VARCHAR},
+            Field4 = #{field4,jdbcType=VARCHAR}
+        where GoodsID = #{goodsid,jdbcType=VARCHAR}
+    </update>
+</mapper>

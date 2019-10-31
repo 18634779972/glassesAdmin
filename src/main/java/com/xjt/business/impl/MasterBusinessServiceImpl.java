@@ -5,6 +5,7 @@ import com.xjt.dao.master.MasterDao;
 import com.xjt.dto.MasterReqDto;
 import com.xjt.entity.Master;
 import com.xjt.utils.GeneratePassword;
+import com.xjt.utils.MD5Util;
 import com.xjt.utils.STRUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -29,7 +30,7 @@ public class MasterBusinessServiceImpl implements MasterBusinessService {
         BeanUtils.copyProperties(reqDto,master);
         String password = reqDto.getPassword();
         master.setId(STRUtils.createUUID());
-        master.setPassword(GeneratePassword.generatePassword(password));
+        master.setPassword(MD5Util.stringTO_MD5(password));
         master.setCreatedate(new Date());
         master.setDeleteFlag(1L);
          int num = masterDao.insert(master);
@@ -37,4 +38,6 @@ public class MasterBusinessServiceImpl implements MasterBusinessService {
              throw new RuntimeException("添加用户发生异常");
          }
     }
+
+
 }

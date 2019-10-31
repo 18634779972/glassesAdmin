@@ -3,6 +3,7 @@ package com.xjt.dao.master;
 import com.xjt.dto.DatapermissionReqDto;
 import com.xjt.entity.Datapermission;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -31,6 +32,8 @@ public interface DatapermissionDao {
      * @return
      */
     String queryDiffPermission(DatapermissionReqDto reqDto);
+
+    Datapermission queryMasterPermission(@Param("masterId") String masterId);
 
 
 }

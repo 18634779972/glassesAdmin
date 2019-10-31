@@ -34,7 +34,7 @@ public class DatapermissionReqDto extends BaseReqDto {
      * 渠道id(关联channel)
      */
     @ApiModelProperty("渠道id")
-    private String channelId;
+    private String customerId;
 
     /**
      * 供应商id(关联supply表)
@@ -58,6 +58,10 @@ public class DatapermissionReqDto extends BaseReqDto {
      */
 
     private Integer requestType;
+    /**
+     * 用户id
+     */
+    private String masterId;
 
     public String getId() {
         return id;
@@ -91,13 +95,7 @@ public class DatapermissionReqDto extends BaseReqDto {
         this.warehouseId = warehouseId == null ? null : warehouseId.trim();
     }
 
-    public String getChannelId() {
-        return channelId;
-    }
 
-    public void setChannelId(String channelId) {
-        this.channelId = channelId == null ? null : channelId.trim();
-    }
 
     public String getSupplyId() {
         return supplyId;
@@ -129,5 +127,21 @@ public class DatapermissionReqDto extends BaseReqDto {
 
     public void setRequestType(Integer requestType) {
         this.requestType = requestType;
+    }
+
+    public String getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(String customerId) {
+        this.customerId = customerId;
+    }
+
+    public String getMasterId() {
+        return masterId;
+    }
+
+    public void setMasterId(String masterId) {
+        this.masterId = masterId;
     }
 }

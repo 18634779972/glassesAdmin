@@ -23,10 +23,14 @@ public interface DatapermissionService {
      * 查看管理组品牌权限
      */
     BaseResDto queryBrandPermission(DatapermissionReqDto reqDto);
+
     /**
      * 查看管理组渠道权限
+     * @param reqDto
+     * @return
      */
-    BaseResDto queryChannelPermission(DatapermissionReqDto reqDto);
+    BaseResDto queryCustomerPermission(DatapermissionReqDto reqDto);
+
 
     /**
      * 查看管理组仓库权限

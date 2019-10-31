@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xjt.dao.master.GoodspicturemgtDao" >
+
+    <resultMap id="BaseResultMap" type="com.xjt.entity.Goodspicturemgt" >
+        <id column="ID" property="id" jdbcType="INTEGER" />
+        <result column="FileName" property="filename" jdbcType="VARCHAR" />
+        <result column="FilePath" property="filepath" jdbcType="VARCHAR" />
+        <result column="PicturePath" property="picturepath" jdbcType="VARCHAR" />
+        <result column="UploadDate" property="uploaddate" jdbcType="TIMESTAMP" />
+        <result column="GoodsID" property="goodsid" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        ID, FileName, FilePath, PicturePath, UploadDate, GoodsID
+    </sql>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+        select 
+        <include refid="Base_Column_List" />
+        from goodspicturemgt
+        where ID = #{id,jdbcType=INTEGER}
+    </select>
+    <select id="queryFilesInfo" parameterType="java.util.List" resultMap="BaseResultMap">
+        select ID, FileName, FilePath, GoodsID
+         from goodspicturemgt
+            where GoodsID in
+            <foreach collection="goodsIds" item="id" separator="," close=")" open="(" index="index">
+                #{id}
+            </foreach>
+    </select>
+    <select id="queryByGoodId" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select ID, FileName, FilePath, GoodsID
+         from goodspicturemgt
+            where GoodsID  = #{goodsId}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+        delete from goodspicturemgt
+        where ID = #{id,jdbcType=INTEGER}
+    </delete>
+
+    <insert id="insert" parameterType="com.xjt.entity.Goodspicturemgt" >
+        insert into goodspicturemgt (ID, FileName, FilePath, 
+            PicturePath, UploadDate, GoodsID
+            )
+        values (#{id,jdbcType=INTEGER}, #{filename,jdbcType=VARCHAR}, #{filepath,jdbcType=VARCHAR}, 
+            #{picturepath,jdbcType=VARCHAR}, #{uploaddate,jdbcType=TIMESTAMP}, #{goodsid,jdbcType=VARCHAR}
+            )
+    </insert>
+    <!--批量添加货品图片信息-->
+    <insert id="insertGoodsPics" parameterType="java.util.List" >
+         insert into goodspicturemgt (ID, FileName, FilePath,
+            PicturePath, UploadDate, GoodsID
+            )
+        values
+        <foreach collection="goodspicturemgts" item="e" separator="," >
+            (#{e.id,jdbcType=INTEGER}, #{e.filename,jdbcType=VARCHAR}, #{e.filepath,jdbcType=VARCHAR},
+            #{e.picturepath,jdbcType=VARCHAR}, #{e.uploaddate,jdbcType=TIMESTAMP}, #{e.goodsid,jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.xjt.entity.Goodspicturemgt" >
+        insert into goodspicturemgt
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                ID,
+            </if>
+            <if test="filename != null" >
+                FileName,
+            </if>
+            <if test="filepath != null" >
+                FilePath,
+            </if>
+            <if test="picturepath != null" >
+                PicturePath,
+            </if>
+            <if test="uploaddate != null" >
+                UploadDate,
+            </if>
+            <if test="goodsid != null" >
+                GoodsID,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="filename != null" >
+                #{filename,jdbcType=VARCHAR},
+            </if>
+            <if test="filepath != null" >
+                #{filepath,jdbcType=VARCHAR},
+            </if>
+            <if test="picturepath != null" >
+                #{picturepath,jdbcType=VARCHAR},
+            </if>
+            <if test="uploaddate != null" >
+                #{uploaddate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="goodsid != null" >
+                #{goodsid,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.xjt.entity.Goodspicturemgt" >
+        update goodspicturemgt
+        <set >
+            <if test="filename != null" >
+                FileName = #{filename,jdbcType=VARCHAR},
+            </if>
+            <if test="filepath != null" >
+                FilePath = #{filepath,jdbcType=VARCHAR},
+            </if>
+            <if test="picturepath != null" >
+                PicturePath = #{picturepath,jdbcType=VARCHAR},
+            </if>
+            <if test="uploaddate != null" >
+                UploadDate = #{uploaddate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="goodsid != null" >
+                GoodsID = #{goodsid,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where ID = #{id,jdbcType=INTEGER}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.xjt.entity.Goodspicturemgt" >
+        update goodspicturemgt
+        set FileName = #{filename,jdbcType=VARCHAR},
+            FilePath = #{filepath,jdbcType=VARCHAR},
+            PicturePath = #{picturepath,jdbcType=VARCHAR},
+            UploadDate = #{uploaddate,jdbcType=TIMESTAMP},
+            GoodsID = #{goodsid,jdbcType=VARCHAR}
+        where ID = #{id,jdbcType=INTEGER}
+    </update>
+</mapper>

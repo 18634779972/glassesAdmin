@@ -69,8 +69,9 @@ public class DatapermissionController {
             return datapermissionService.queryBrandPermission(reqDto);
         }
         if(type==2){
-            return  datapermissionService.queryChannelPermission(reqDto);
+            return datapermissionService.queryCustomerPermission(reqDto);
         }
+
         if(type==3){
             return datapermissionService.querySupplyPermission(reqDto);
         }

@@ -54,8 +54,11 @@ public class DateUtil {
      * @param strDate 日期字符串(yyyy-MM-dd)
      * @return java.sql.date 类型
      */
-    public static Date getDate(String strDate) {
-        return java.sql.Date.valueOf(strDate);
+    public static Date getDate(String strDate) throws ParseException {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = sdf.parse(strDate);
+        return date;
+
     }
 
     /**
@@ -551,11 +554,5 @@ public class DateUtil {
         return cal.getTime();
     }
 
-    public static void main(String[] args) {
 
-        // Date date =DateUtil.getDate("2017-01-17");
-        // Date date = new Date();
-        SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        System.out.println(sf.format(new Date()));
-    }
 }

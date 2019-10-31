@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xjt.dao.master.GoodsbarcodeDao" >
+
+    <resultMap id="BaseResultMap" type="com.xjt.entity.Goodsbarcode" >
+        <id column="ID" property="id" jdbcType="INTEGER" />
+        <result column="GoodsNo" property="goodsno" jdbcType="VARCHAR" />
+        <result column="Colordd" property="colordd" jdbcType="VARCHAR" />
+        <result column="Dioptre" property="dioptre" jdbcType="DECIMAL" />
+        <result column="Astigmia" property="astigmia" jdbcType="DECIMAL" />
+        <result column="BarCode" property="barcode" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        ID, GoodsNo, Colordd, Dioptre, Astigmia, BarCode
+    </sql>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+        select 
+        <include refid="Base_Column_List" />
+        from goodsbarcode
+        where ID = #{id,jdbcType=INTEGER}
+    </select>
+    <select id="selectByGoodsNo" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List" />
+        from goodsbarcode
+        where GoodsNo = #{goodsno,jdbcType=VARCHAR}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+        delete from goodsbarcode
+        where ID = #{id,jdbcType=INTEGER}
+    </delete>
+
+    <insert id="insert" parameterType="com.xjt.entity.Goodsbarcode" >
+        insert into goodsbarcode (ID, GoodsNo, Colordd, 
+            Dioptre, Astigmia, BarCode
+            )
+        values (#{id,jdbcType=INTEGER}, #{goodsno,jdbcType=VARCHAR}, #{colordd,jdbcType=VARCHAR}, 
+            #{dioptre,jdbcType=DECIMAL}, #{astigmia,jdbcType=DECIMAL}, #{barcode,jdbcType=VARCHAR}
+            )
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.xjt.entity.Goodsbarcode" >
+        insert into goodsbarcode
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                ID,
+            </if>
+            <if test="goodsno != null" >
+                GoodsNo,
+            </if>
+            <if test="colordd != null" >
+                Colordd,
+            </if>
+            <if test="dioptre != null" >
+                Dioptre,
+            </if>
+            <if test="astigmia != null" >
+                Astigmia,
+            </if>
+            <if test="barcode != null" >
+                BarCode,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="goodsno != null" >
+                #{goodsno,jdbcType=VARCHAR},
+            </if>
+            <if test="colordd != null" >
+                #{colordd,jdbcType=VARCHAR},
+            </if>
+            <if test="dioptre != null" >
+                #{dioptre,jdbcType=DECIMAL},
+            </if>
+            <if test="astigmia != null" >
+                #{astigmia,jdbcType=DECIMAL},
+            </if>
+            <if test="barcode != null" >
+                #{barcode,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.xjt.entity.Goodsbarcode" >
+        update goodsbarcode
+        <set >
+            <if test="goodsno != null" >
+                GoodsNo = #{goodsno,jdbcType=VARCHAR},
+            </if>
+            <if test="colordd != null" >
+                Colordd = #{colordd,jdbcType=VARCHAR},
+            </if>
+            <if test="dioptre != null" >
+                Dioptre = #{dioptre,jdbcType=DECIMAL},
+            </if>
+            <if test="astigmia != null" >
+                Astigmia = #{astigmia,jdbcType=DECIMAL},
+            </if>
+            <if test="barcode != null" >
+                BarCode = #{barcode,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where ID = #{id,jdbcType=INTEGER}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.xjt.entity.Goodsbarcode" >
+        update goodsbarcode
+        set GoodsNo = #{goodsno,jdbcType=VARCHAR},
+            Colordd = #{colordd,jdbcType=VARCHAR},
+            Dioptre = #{dioptre,jdbcType=DECIMAL},
+            Astigmia = #{astigmia,jdbcType=DECIMAL},
+            BarCode = #{barcode,jdbcType=VARCHAR}
+        where ID = #{id,jdbcType=INTEGER}
+    </update>
+</mapper>
